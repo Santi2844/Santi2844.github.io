@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Buscador de Salones - TEC</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      text-align: center;
+    }
+
+    #mapa-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    #resaltado {
+      position: absolute;
+      width: 40px;
+      height: 20px;
+      background-color: blue;
+      opacity: 0.7;
+      border: 2px solid #fff;
+      border-radius: 4px;
+      display: none;
+      transition: transform 0.3s ease;
+    }
+
+    #menu {
+      text-align: left;
+      position: absolute;
+      top: 200px;
+      left: 40px;
+      background-color: #fff;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    #menu h2 {
+      margin-bottom: 5px;
+    }
+
+    #menu ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    #menu li {
+      cursor: pointer;
+      padding: 5px;
+      margin: 2px 0;
+      border-radius: 4px;
+    }
+
+    #menu li:hover {
+      background-color: #e0e0e0;
+    }
+
+    #sugerencias {
+      position: absolute;
+      background: white;
+      border: 1px solid #ccc;
+      max-height: 200px;
+      overflow-y: auto;
+      width: 200px;
+      display: none;
+      margin-top: 2px;
+      z-index: 10;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    #sugerencias div {
+      padding: 5px;
+      cursor: pointer;
+    }
+    #sugerencias div:hover {
+      background-color: #eee;
+    }
+  </style>
+</head>
+
+<body>
+<div style="position: absolute; top: 20px; left: 20px; display: flex; gap: 10px; align-items: flex-start;">
+  <button onclick="toggleHistorial()" style="padding: 5px 10px;">🕘 Ver Historial</button>
+  <div id="historial" style="display: none; background: white; border: 1px solid #ccc; border-radius: 8px; padding: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+    <h4 style="margin: 0 0 5px 0;">Historial</h4>
+    <ul id="listaHistorial" style="list-style: none; margin: 0; padding: 0;"></ul>
+  </div>
+</div>
+
+
+  <h1>Buscador de Salones - TEC</h1>
+
+  <div style="position: relative; display: inline-block;">
+    <input type="text" id="codigoSalon" placeholder="Ej. 5304 o Edificio II">
+    <div id="sugerencias"></div>
+
+</div>
+
+  </div>
+  <button onclick="buscarSalon()">Buscar</button>
+
+  <p id="descripcion"><strong>bienvenidos!
+
+  <div id="menu">
+    <h2>Universidad</h2>
+    <ul>
+<li onclick="buscarLugar('Edificio I')">Edificio I</li>
+<li onclick="buscarLugar('Edificio II')">Edificio II</li>
+<li onclick="buscarLugar('Edificio III')">Edificio III</li>
+
+
+    </ul>
+
+    <h2>Preparatoria</h2>
+    <ul>
+<li onclick="buscarLugar('Edificio VII')">Edificio VII</li>
+<li onclick="buscarLugar('Edificio VIII')">Edificio VIII</li>
+<li onclick="buscarLugar('Cafeteria Prepararatoria')">Cafeteria Prepararatoria</li>
+
+
+
+      
+    </ul>
+  </div>
+
+  <div id="mapa-container">
+    <img src="MAPA.png" alt="Mapa del TEC" />
+    <div id="resaltado"></div>
+  </div>
+
+  <script>
+    const posicionesEdificios = {
+"Edificio I": { edificio: "2", piso: "NA", descripcion: "Departamento de Negocios y Sociales.", x: 680, y: 325, salon: "NA" },
+"Edificio II": { edificio: "2", piso: "NA", descripcion: "Departamento de Ingeniería y Ciencias.", x: 680, y: 280, salon: "NA" },
+"Edificio III": { edificio: "3", piso: "NA", descripcion: "Edificio 3.", x: 680, y: 230, salon: "NA" },
+
+"Edificio VII": { edificio: "6", piso: "NA", descripcion: "Edificio 6.", x: 310, y: 883, salon: "NA" },
+"Edificio VIII": { edificio: "9", piso: "NA", descripcion: "Edificio 9.", x: 350, y: 920, salon: "NA" },
+"Cafeteria Prepararatoria": { edificio: "8", piso: "5", descripcion: "Oficinas y aulas 5.", x: 300, y: 954, salon: "NA" },
+
+    };
+  
+  const coordenadas = {
+    '1': { x: 680, y: 325 },  // Edificio I
+    '2': { x: 680, y: 280 },  // Edificio II
+    '3': { x: 680, y: 230 },  // Edificio III
+    '4': { x: 700, y: 175 },  // Edificio IV
+    '5': { x: 620, y: 175 },  // Edificio V
+    '6': { x: 620, y: 230 }, // Edificio VI
+    '7': { x: 310, y: 883 }, // Edificio VII
+    '8': { x: 350, y: 920 }, // Edificio VIII
+    '9': { x: 580, y: 250 },  // Edificio IX
+    'Biblioteca Prepa': { x: 350, y: 920  } // Biblioteca
+  };
+
+  const posicionesEdificio = {};
+
+  // Generación automática de códigos como 5304
+  for (let edificio = 1; edificio <= 9; edificio++) {
+    for (let piso = 1; piso <= 7; piso++) {
+      for (let salon = 1; salon <= 11; salon++) {
+        const codigo = `${edificio}${piso}${String(salon).padStart(2, '0')}`;
+        posicionesEdificios[codigo] = {
+          edificio: edificio,
+          piso: piso,
+          salon: salon,
+          x: coordenadas[edificio.toString()].x,
+          y: coordenadas[edificio.toString()].y,
+          descripcion: "NA"
+        };
+      }
+    }
+  }
+
+  // Aquí puedes agregar manualmente más lugares por nombre si deseas
+  posicionesEdificios["Biblioteca Prepa"] = {
+    edificio: "Biblioteca",
+    piso: "NA",
+    salon: "NA",
+    x: coordenadas["Biblioteca Prepa"].x,
+    y: coordenadas["Biblioteca Prepa"].y,
+    descripcion: "Biblioteca central del campus"
+  };
+
+  function buscarSalon() {
+    const codigo = document.getElementById("codigoSalon").value.trim();
+    const resaltado = document.getElementById("resaltado");
+    const descripcion = document.getElementById("descripcion");
+
+    // Si es un lugar por nombre
+    if (posicionesEdificios[codigo]) {
+      agregarAHistorial(codigo); // 👈 Agregado
+      buscarLugar(codigo);
+    } else {
+      resaltado.style.display = "none";
+      descripcion.innerText = "No se encontró información del lugar.";
+    }
+  }
+
+  function buscarLugar(nombre) {
+    const lugar = posicionesEdificios[nombre];
+    const resaltado = document.getElementById("resaltado");
+    const descripcion = document.getElementById("descripcion");
+
+    if (lugar) {
+       agregarAHistorial(nombre); // 👈 Nueva línea
+      resaltado.style.left = lugar.x + "px";
+      resaltado.style.top = lugar.y + "px";
+      resaltado.style.display = "block";
+      resaltado.style.transform = "scale(1.5)";
+      setTimeout(() => resaltado.style.transform = "scale(1)", 200);
+
+      descripcion.innerHTML = `Edificio: <strong>${lugar.edificio}</strong>, Piso: <strong>${lugar.piso}</strong>, Salón: <strong>${lugar.salon}</strong>, Descripción: ${lugar.descripcion}`;
+    } else {
+      resaltado.style.display = "none";
+      descripcion.innerText = "No se encontró información del lugar.";
+    }
+  }
+
+  // Autocompletado
+  const sugerencias = Object.keys(posicionesEdificios);
+  const input = document.getElementById("codigoSalon");
+  const contenedor = document.getElementById("sugerencias");
+
+  input.addEventListener("input", function () {
+    const texto = this.value.toLowerCase().trim();
+    contenedor.innerHTML = "";
+    if (!texto) {
+      contenedor.style.display = "none";
+      return;
+    }
+
+    const filtradas = sugerencias.filter(item => item.toLowerCase().includes(texto));
+    if (filtradas.length === 0) {
+      contenedor.style.display = "none";
+      return;
+    }
+
+    filtradas.forEach(item => {
+      const div = document.createElement("div");
+      div.textContent = item;
+      div.addEventListener("click", function () {
+        input.value = item;
+        contenedor.style.display = "none";
+        buscarSalon();
+      });
+      contenedor.appendChild(div);
+    });
+
+    contenedor.style.display = "block";
+  });
+
+  document.addEventListener("click", function (e) {
+    if (!contenedor.contains(e.target) && e.target !== input) {
+      contenedor.style.display = "none";
+    }
+  });
+
+  
+
+
+
+const historialBusquedas = [];
+
+function agregarAHistorial(nombre) {
+  if (historialBusquedas[0] === nombre) return;
+
+  historialBusquedas.unshift(nombre);
+
+  if (historialBusquedas.length > 5) historialBusquedas.pop();
+
+  const lista = document.getElementById("listaHistorial");
+  lista.innerHTML = "";
+
+  historialBusquedas.forEach(item => {
+    const li = document.createElement("li");
+    li.textContent = item;
+    li.style.cursor = "pointer";
+    li.style.padding = "4px 0";
+    li.style.color = "#1a73e8";
+    li.addEventListener("click", () => {
+      document.getElementById("codigoSalon").value = item;
+      buscarSalon();
+    });
+    lista.appendChild(li);
+  });
+}
+function toggleHistorial() {
+  const historial = document.getElementById("historial");
+  historial.style.display = historial.style.display === "none" ? "block" : "none";
+}
+
+
+
+
+
+
+
+
+  
+</script>
+<!-- Menú lateral derecho - Obras de Arte -->
+<div style="position: absolute; right: 20px; top: 100px; background: white; padding: 15px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.2); width: 200px;">
+  <h3>Obras de Arte</h3>
+  <ul style="list-style-type: none; padding-left: 0;">
+    <li onclick="mostrarObraArte('cosaRoja')" style="cursor:pointer; color: #1a73e8;">Cosa Roja</li>
+    <li onclick="mostrarObraArte('cosaAzul')" style="cursor:pointer; color: #1a73e8;">Cosa Azul</li>
+  </ul>
+</div>
+
+<!-- Contenedor para detalles de la obra -->
+<div id="detalleObra" style="position: absolute; right: 20px; top: 250px; background: white; padding: 15px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.2); width: 250px; display: none;">
+  <!-- Contenido se insertará dinámicamente -->
+</div>
+
+<script>
+  const obras = {
+    cosaRoja: {
+      nombre: "Cosa Roja",
+      autor: "Autor Desconocido",
+      año: "2023",
+      imagen: "Cosa Roja.png",
+      pos: { left: "800px", top: "500px" }
+    },
+    cosaAzul: {
+      nombre: "Cosa Azul",
+      autor: "Autor Desconocido",
+      año: "2024",
+      imagen: "Cosa Azul.png",
+      pos: { left: "750px", top: "450px" }
+    }
+  };
+
+  function mostrarObraArte(clave) {
+    const obra = obras[clave];
+    if (!obra) return;
+
+    // Mostrar detalles
+    const cont = document.getElementById("detalleObra");
+    cont.innerHTML = `
+      <div style="text-align: right;"><button onclick="cerrarDetalleObra()" style="border:none; background:none; font-size:16px; cursor:pointer;">✖️</button></div>
+      <h4>${obra.nombre}</h4>
+      <img src="${obra.imagen}" alt="${obra.nombre}" style="width: 100%; border-radius: 10px;" />
+      <p><strong>Autor:</strong> ${obra.autor}</p>
+      <p><strong>Año:</strong> ${obra.año}</p>
+    `;
+    cont.style.display = "block";
+
+    // Eliminar marcador anterior si existe
+    const marcadorExistente = document.getElementById("marcadorObra");
+    if (marcadorExistente) marcadorExistente.remove();
+
+    // Crear marcador en el mapa
+    const mapa = document.getElementById("mapaContainer") || document.body;
+    const marcador = document.createElement("div");
+    marcador.id = "marcadorObra";
+    marcador.innerHTML = "🖼️";
+    marcador.style.position = "absolute";
+    marcador.style.left = obra.pos.left;
+    marcador.style.top = obra.pos.top;
+    marcador.style.fontSize = "24px";
+    marcador.style.zIndex = "999";
+    mapa.appendChild(marcador);
+  }
+
+  function cerrarDetalleObra() {
+    document.getElementById("detalleObra").style.display = "none";
+
+    const marcador = document.getElementById("marcadorObra");
+    if (marcador) marcador.remove();
+  }
+  
+</script>
+<script>
+let esModoNoche = false;
+
+function aplicarTema() {
+  const ahora = new Date();
+  const hora = ahora.getHours();
+  const minuto = ahora.getMinutes();
+
+  // Rango: 10:51 PM (22:51) hasta 10:53 PM (22:53)
+  const dentroDelRango = (hora === 18 && minuto >= 10 && minuto <= 12);
+
+  // Solo aplica cambios si cambia el estado
+  if (dentroDelRango !== esModoNoche) {
+    esModoNoche = dentroDelRango;
+
+    // Elementos a modificar
+    const body = document.body;
+    const menu = document.querySelector("#menu");
+    const menuObras = document.querySelector('div[style*="right: 20px"][style*="top: 100px"]');
+    const detalleObra = document.getElementById("detalleObra");
+
+    if (dentroDelRango) {
+      body.style.backgroundColor = "#121212";
+      body.style.color = "#eee";
+
+      if (menu) {
+        menu.style.backgroundColor = "#222";
+        menu.style.color = "#eee";
+      }
+
+      if (menuObras) {
+        menuObras.style.backgroundColor = "#222";
+        menuObras.style.color = "#eee";
+      }
+
+      if (detalleObra) {
+        detalleObra.style.backgroundColor = "#222";
+        detalleObra.style.color = "#eee";
+      }
+    } else {
+      body.style.backgroundColor = "#f0f0f0";
+      body.style.color = "#000";
+
+      if (menu) {
+        menu.style.backgroundColor = "#fff";
+        menu.style.color = "#000";
+      }
+
+      if (menuObras) {
+        menuObras.style.backgroundColor = "#fff";
+        menuObras.style.color = "#000";
+      }
+
+      if (detalleObra) {
+        detalleObra.style.backgroundColor = "#fff";
+        detalleObra.style.color = "#000";
+      }
+    }
+  }
+}
+
+// Ejecutar al cargar
+aplicarTema();
+
+// Verificar el tiempo real cada segundo
+setInterval(aplicarTema, 1000);
+</script>
+<!-- Botón para limpiar -->
+<button onclick="limpiarMapa()" style="margin-bottoM: 10x;">Limpiar</button>
+
+<script>
+  function limpiarMapa() {
+    document.getElementById("resaltado").style.display = "none";
+    document.getElementById("descripcion").innerText = "bienvenidos!";
+    cerrarDetalleObra(); // reutiliza tu función para cerrar obra
+  }
+</script>
+<!-- Botones de Zoom -->
+<div style="position: absolute; bottom: 20px; right: 20px; z-index: 1000;">
+  <button onclick="zoomIn()" style="padding: 5px 10px;">+</button>
+  <button onclick="zoomOut()" style="padding: 5px 10px;">−</button>
+</div>
+
+<script>
+  let escala = 1;
+  const mapaContainer = document.getElementById('mapa-container');
+
+  function zoomIn() {
+    escala += 0.1;
+    mapaContainer.style.transform = `scale(${escala})`;
+    mapaContainer.style.transformOrigin = "top left";
+  }
+
+  function zoomOut() {
+    escala = Math.max(0.5, escala - 0.1);
+    mapaContainer.style.transform = `scale(${escala})`;
+    mapaContainer.style.transformOrigin = "top left";
+  }
+</script>
+
+</script>
+
+</script>
+
+</script>
+
+
+</body>
+
+
+</html>
