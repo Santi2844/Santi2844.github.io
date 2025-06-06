@@ -29,7 +29,7 @@
     }
 #menu {
   position: fixed;
-  top: 0;
+  top: 1000000000;
   left: 0;
   width: 250px;
   max-height: calc(1rem + 5 * 3rem); /* Ajusta para mostrar hasta "Edificio 5" */
@@ -64,7 +64,6 @@
 
 
 
-
     #menu h2 {
       margin-bottom: 5px;
     }
@@ -96,11 +95,26 @@
 #mapa-container {
   margin-top: 150px;
 }
+#nombreUsuario {
+  position: fixed;
+  top: 10px;
+  right: 20px;
+  font-weight: bold;
+  font-size: 16px;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 5px 10px;
+  border-radius: 8px;
+  z-index: 9999;
+}
+
 
   </style>
 </head>
 
 <body>
+<div id="nombreUsuario">Santiago Perez Arreola</div>
+
+
   <h1>Buscador de Salones - TEC</h1>
 
   <div style="position: relative; display: inline-block;">
@@ -114,6 +128,10 @@
   <div id="menu">
     <h2>Universidad</h2>
     <ul>
+
+
+
+
 <li onclick="buscarLugar('Edificio I')">Edificio I</li>
 <li onclick="buscarLugar('Edificio II')">Edificio II</li>
 <li onclick="buscarLugar('Edificio III')">Edificio III</li>
@@ -590,7 +608,7 @@ function toggleHistorial() {
   
 </script>
 <!-- Menú lateral derecho - Obras de Arte -->
-<div style="position: absolute; right: 20px; top: 90px; background: white; padding: 15px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.2); width: 200px;">
+<div style="position: absolute; right: 20px; top: 150px; background: white; padding: 15px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.2); width: 200px;">
   <h3>Obras de Arte</h3>
   <ul style="list-style-type: none; padding-left: 0;">
     <li onclick="mostrarObraArte('cosaRoja')" style="cursor:pointer; color: #1a73e8;">Cosa Roja</li>
@@ -769,6 +787,7 @@ setInterval(aplicarTema, 1000);
     mapaContainer.style.transform = `scale(${escala})`;
     mapaContainer.style.transformOrigin = "top left";
   }
+
 </script>
 
 </script>
