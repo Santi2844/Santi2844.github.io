@@ -479,6 +479,7 @@
       }
     }
   }
+  
 
   // Aquí puedes agregar manualmente más lugares por nombre si deseas
   posicionesEdificios["Biblioteca Prepa"] = {
@@ -489,6 +490,44 @@
     y: coordenadas["Biblioteca Prepa"].y,
     descripcion: "Biblioteca central del campus"
   };
+
+
+const historialBusquedas = [];
+
+  function agregarAHistorial(nombre) {
+    // Si el elemento con id 'listaHistorial' no existe, no hagas nada.
+    const lista = document.getElementById("listaHistorial");
+    if (!lista) {
+        console.error("No se encontró el elemento con id 'listaHistorial'. No se puede actualizar el historial.");
+        return;
+    }
+      
+    if (historialBusquedas[0] === nombre) return;
+    historialBusquedas.unshift(nombre);
+    if (historialBusquedas.length > 5) historialBusquedas.pop();
+
+    lista.innerHTML = "";
+
+    historialBusquedas.forEach(item => {
+      const li = document.createElement("li");
+      li.textContent = item;
+      li.style.cursor = "pointer";
+      li.style.padding = "4px 0";
+      li.style.color = "#1a73e8";
+      li.addEventListener("click", () => {
+        document.getElementById("codigoSalon").value = item;
+        buscarSalon();
+      });
+      lista.appendChild(li);
+    });
+  }
+
+  function toggleHistorial() {
+    const historial = document.getElementById("historial");
+    if (historial) {
+      historial.style.display = historial.style.display === "none" ? "block" : "none";
+    }
+  }
 
   function buscarSalon() {
     const codigo = document.getElementById("codigoSalon").value.trim();
@@ -504,6 +543,17 @@
       descripcion.innerText = "No se encontró información del lugar.";
     }
   }
+  
+ function buscarSalon() {
+    const codigo = document.getElementById("codigoSalon").value.trim();
+    if (posicionesEdificios[codigo]) {
+      // Ahora se llama a buscarLugar y esta a su vez llamará a agregarAHistorial
+      buscarLugar(codigo);
+    } else {
+      document.getElementById("resaltado").style.display = "none";
+      document.getElementById("descripcion").innerText = "No se encontró información del lugar.";
+    }
+  }
 
   function buscarLugar(nombre) {
     const lugar = posicionesEdificios[nombre];
@@ -511,7 +561,9 @@
     const descripcion = document.getElementById("descripcion");
 
     if (lugar) {
-       agregarAHistorial(nombre); // 👈 Nueva línea
+      // Esta llamada ahora funcionará porque la función ya fue definida
+      agregarAHistorial(nombre); 
+      
       resaltado.style.left = lugar.x + "px";
       resaltado.style.top = lugar.y + "px";
       resaltado.style.display = "block";
@@ -525,6 +577,12 @@
     }
   }
 
+
+
+
+
+
+  
   // Autocompletado
   const sugerencias = Object.keys(posicionesEdificios);
   const input = document.getElementById("codigoSalon");
@@ -565,43 +623,6 @@
   });
 
   
-
-
-
-const historialBusquedas = [];
-
-function agregarAHistorial(nombre) {
-  if (historialBusquedas[0] === nombre) return;
-
-  historialBusquedas.unshift(nombre);
-
-  if (historialBusquedas.length > 5) historialBusquedas.pop();
-
-  const lista = document.getElementById("listaHistorial");
-  lista.innerHTML = "";
-
-  historialBusquedas.forEach(item => {
-    const li = document.createElement("li");
-    li.textContent = item;
-    li.style.cursor = "pointer";
-    li.style.padding = "4px 0";
-    li.style.color = "#1a73e8";
-    li.addEventListener("click", () => {
-      document.getElementById("codigoSalon").value = item;
-      buscarSalon();
-    });
-    lista.appendChild(li);
-  });
-}
-function toggleHistorial() {
-  const historial = document.getElementById("historial");
-  historial.style.display = historial.style.display === "none" ? "block" : "none";
-}
-
-
-
-
-
 
 
 
@@ -674,11 +695,8 @@ marcador.style.zIndex = "999";
 mapa.appendChild(marcador);
 
   }
-  marcador.innerHTML = ""; // Vacío
-marcador.style.width = "20px";
-marcador.style.height = "20px";
-marcador.style.borderRadius = "50%";
-marcador.style.backgroundColor = "#1a73e8";
+
+
 
 
   function cerrarDetalleObra() {
@@ -787,6 +805,7 @@ setInterval(aplicarTema, 1000);
     mapaContainer.style.transform = `scale(${escala})`;
     mapaContainer.style.transformOrigin = "top left";
   }
+
 
 </script>
 
