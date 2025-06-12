@@ -624,89 +624,8 @@ const historialBusquedas = [];
 
   
 
-
-
-  
 </script>
-<!-- Menú lateral derecho - Obras de Arte -->
-<div style="position: absolute; right: 20px; top: 150px; background: white; padding: 15px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.2); width: 200px;">
-  <h3>Obras de Arte</h3>
-  <ul style="list-style-type: none; padding-left: 0;">
-    <li onclick="mostrarObraArte('cosaRoja')" style="cursor:pointer; color: #1a73e8;">Cosa Roja</li>
-    <li onclick="mostrarObraArte('cosaAzul')" style="cursor:pointer; color: #1a73e8;">Cosa Azul</li>
-  </ul>
-</div>
 
-<!-- Contenedor para detalles de la obra -->
-<div id="detalleObra" style="position: absolute; right: 20px; top: 250px; background: white; padding: 15px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.2); width: 250px; display: none;">
-  <!-- Contenido se insertará dinámicamente -->
-</div>
-
-<script>
-  const obras = {
-    cosaRoja: {
-      nombre: "Cosa Roja",
-      autor: "Autor Desconocido",
-      año: "2023",
-      imagen: "Cosa Roja.png",
-      pos: { left: "800px", top: "500px" }
-    },
-    cosaAzul: {
-      nombre: "Cosa Azul",
-      autor: "Autor Desconocido",
-      año: "2024",
-      imagen: "Cosa Azul.png",
-      pos: { left: "750px", top: "450px" }
-    }
-  };
-
-  function mostrarObraArte(clave) {
-    const obra = obras[clave];
-    if (!obra) return;
-
-    // Mostrar detalles
-    const cont = document.getElementById("detalleObra");
-    cont.innerHTML = `
-      <div style="text-align: right;"><button onclick="cerrarDetalleObra()" style="border:none; background:none; font-size:16px; cursor:pointer;">✖️</button></div>
-      <h4>${obra.nombre}</h4>
-      <img src="${obra.imagen}" alt="${obra.nombre}" style="width: 100%; border-radius: 10px;" />
-      <p><strong>Autor:</strong> ${obra.autor}</p>
-      <p><strong>Año:</strong> ${obra.año}</p>
-    `;
-    cont.style.display = "block";
-
-    // Eliminar marcador anterior si existe
-    const marcadorExistente = document.getElementById("marcadorObra");
-    if (marcadorExistente) marcadorExistente.remove();
-
-    // Crear marcador en el mapa
-const mapa = document.getElementById("mapaContainer") || document.body;
-const marcador = document.createElement("div");
-marcador.id = "marcadorObra";
-marcador.style.position = "absolute";
-marcador.style.left = obra.pos.left;
-marcador.style.top = obra.pos.top;
-marcador.style.width = "20px";
-marcador.style.height = "20px";
-marcador.style.borderRadius = "50%";
-marcador.style.backgroundColor = "#1a73e8";
-marcador.style.boxShadow = "0 0 5px rgba(0,0,0,0.4)";
-marcador.style.zIndex = "999";
-mapa.appendChild(marcador);
-
-  }
-
-
-
-
-  function cerrarDetalleObra() {
-    document.getElementById("detalleObra").style.display = "none";
-
-    const marcador = document.getElementById("marcadorObra");
-    if (marcador) marcador.remove();
-  }
-  
-</script>
 <script>
 let esModoNoche = false;
 
@@ -783,40 +702,239 @@ setInterval(aplicarTema, 1000);
     document.getElementById("descripcion").innerText = "bienvenidos!";
     cerrarDetalleObra(); // reutiliza tu función para cerrar obra
   }
+
 </script>
-<!-- Botones de Zoom -->
-<div style="position: absolute; bottom: 20px; right: 20px; z-index: 1000;">
-  <button onclick="zoomIn()" style="padding: 5px 10px;">+</button>
-  <button onclick="zoomOut()" style="padding: 5px 10px;">−</button>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galería de Arte</title>
+<style>
+  /* Estilos generales para el cuerpo del documento */
+  body {
+    font-family: sans-serif;
+    background-color: #f0f0f0; /* Un fondo suave para el ejemplo */
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Contenedor del mapa o imagen de fondo (simulado) */
+  #mapaContainer {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Ocupa toda la altura de la pantalla */
+    background-image: url('https://via.placeholder.com/1200x800/e0e0e0/808080?text=Fondo+del+Mapa');
+    background-size: cover;
+  }
+
+  /* --- INICIO DE CAMBIOS --- */
+
+  /* Contenedor principal del menú lateral */
+  #menuLateral {
+    position: absolute;
+    right: 20px;
+    top: 150px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    width: 240px; /* Un poco más de ancho para el padding */
+    /* El max-height y overflow se mueven al contenedor de la lista */
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Título Fijo del Menú */
+  #menuLateral h3 {
+    padding: 15px 20px;
+    margin: 0;
+    font-size: 1.1em;
+    border-bottom: 1px solid #eee; /* Línea separadora */
+  }
+
+  /* Contenedor que SÍ se desplaza (scroll) */
+  .scroll-container {
+    max-height: 50vh; /* Altura máxima para la lista */
+    overflow-y: auto; /* Scroll vertical solo si es necesario */
+  }
+
+  /* Estilos para la lista dentro del menú */
+  #listaObras {
+    list-style-type: none;
+    padding: 10px 20px; /* Padding vertical y horizontal */
+    margin: 0;
+  }
+  
+  #listaObras li {
+    cursor: pointer;
+    color: #1a73e8;
+    padding: 8px 0;
+    transition: background-color 0.2s;
+  }
+  
+  #listaObras li:hover {
+    color: #0d47a1;
+  }
+
+  /* Estilo personalizado para la barra de scroll */
+  .scroll-container::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .scroll-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+
+  .scroll-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+
+  .scroll-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  /* --- FIN DE CAMBIOS --- */
+</style>
+</head>
+<body>
+
+<div id="mapaContainer">
+  </div>
+
+<div id="menuLateral">
+  <h3>Obras de Arte</h3> <div class="scroll-container"> <ul id="listaObras">
+      <li onclick="mostrarObraArte('cosaRoja')">Cosa Roja</li>
+      <li onclick="mostrarObraArte('cosaAzul')">Cosa Azul</li>
+      <li onclick="mostrarObraArte('rehilete')">Rehilete</li>
+      <li onclick="mostrarObraArte('luna')">Luna</li>
+      <li onclick="mostrarObraArte('nebulosa')">Nebulosa</li>
+      <li onclick="mostrarObraArte('encuentroXX')">Encuentro de aniversario XX</li>
+      <li onclick="mostrarObraArte('clytia')">Clytia</li>
+      <li onclick="mostrarObraArte('arcoOxidado')">Arco oxidado</li>
+      <li onclick="mostrarObraArte('sorca')">Sorca</li>
+      <li onclick="mostrarObraArte('aveDos')">Ave dos</li>
+      <li onclick="mostrarObraArte('memoriaBronce')">Memoria en bronce</li>
+      <li onclick="mostrarObraArte('mitologiaNucleo')">La mitología del núcleo</li>
+      <li onclick="mostrarObraArte('cuatroTorres')">Cuatro torres</li>
+      <li onclick="mostrarObraArte('tresPilares')">3 Pilares</li>
+      <li onclick="mostrarObraArte('cascoBorregos')">Casco Borregos</li>
+      <li onclick="mostrarObraArte('equipoBorregos')">Equipo Borregos</li>
+      <li onclick="mostrarObraArte('escalera')">Escalera</li>
+      <li onclick="mostrarObraArte('laCosaRosa')">La cosa rosa</li>
+      <li onclick="mostrarObraArte('unaSeñorita')">Una señorita</li>
+      <li onclick="mostrarObraArte('relojSolar')">Reloj Solar</li>
+      <li onclick="mostrarObraArte('paseoDeLasCarreras')">Paseo de las carreras</li>
+      <li onclick="mostrarObraArte('borrego')">Borrego</li>
+      <li onclick="mostrarObraArte('cabezaBorregos')">Cabeza Borregos</li>
+    </ul>
+  </div>
 </div>
 
+
+<div id="detalleObra" style="position: absolute; right: 280px; top: 150px; background: white; padding: 15px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.2); width: 300px; display: none; z-index: 1001;">
+  </div>
+
 <script>
-  let escala = 1;
-  const mapaContainer = document.getElementById('mapa-container');
+  // El JavaScript no necesita cambios.
+  const obras = {
+    cosaRoja: {
+      titulo: "Cosa Roja", autor: "Autor Desconocido", año: "2023", tecnica: "Óleo sobre lienzo", esc: "001", coleccion: "Tecnológico de Monterrey Campus Estado de México", imagen: "Cosa Roja.jpg", pos: { left: "800px", top: "500px" }
+    },
+    cosaAzul: {
+      titulo: "Cosa Azul", autor: "Autor Desconocido", año: "2024", tecnica: "Acrílico sobre madera", esc: "002", coleccion: "Tecnológico de Monterrey Campus Estado de México", imagen: "Clytia.jpg", pos: { left: "750px", top: "450px" }
+    },
+    rehilete: { 
+      titulo: "Rehilete", autor: "Miguel Peraza", año: "2006", tecnica: "Aluminio pintado y fierro", esc: "375", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Rehilete.jpg", pos: { left: "600px", top: "300px" }
+    },
+    luna: {
+      titulo: "Luna", autor: "Juan Soriano", año: "2002", tecnica: "Bronce a la cera perdida", esc: "243", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Luna.jpg", pos: { left: "550px", top: "550px" }
+    },
+    nebulosa: {
+      titulo: "Nebulosa", autor: "Salvador Manzano", año: "1982", tecnica: "Metal esmaltado", esc: "207", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Nebulosa.jpg", pos: { left: "400px", top: "400px" }
+    },
+    encuentroXX: {
+      titulo: "Encuentro de aniversario XX", autor: "Jesús Mayagoitia", año: "1996", tecnica: "Acero pintado", esc: "159", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Encuentro de aniversario XX.jpg", pos: { left: "900px", top: "600px" }
+    },
+    clytia: {
+      titulo: "Clytia", autor: "Yvonne Domenge", año: "2001", tecnica: "Acero dulce", esc: "152", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Clytia.jpg", pos: { left: "300px", top: "250px" }
+    },
+    arcoOxidado: {
+      titulo: "Arco oxidado", autor: "Sebastián", año: "1995", tecnica: "Escultura en hierro", esc: "151", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Arco oxidado.jpg", pos: { left: "700px", top: "200px" }
+    },
+    sorca: {
+      titulo: "Sorca", autor: "Becky Guttin", año: "1994", tecnica: "Placa de Cobre", esc: "087", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Sorca.jpg", pos: { left: "650px", top: "650px" }
+    },
+    aveDos: {
+      titulo: "Ave dos", autor: "Hersúa", año: "1993", tecnica: "Bronce", esc: "088", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Ave dos.jpg", pos: { left: "500px", top: "150px" }
+    },
+    memoriaBronce: {
+      titulo: "Memoria en bronce", autor: "Irma Palacios", año: "desconocido", tecnica: "Bronce a la cera perdida", esc: "083", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Memoria en bronce.jpg", pos: { left: "450px", top: "700px" }
+    },
+    mitologiaNucleo: {
+      titulo: "La mitología del núcleo", autor: "Kiyoto Ota", año: "1986", tecnica: "Plomo y fibra de vidrio", esc: "076", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "La mitología del núcleo.jpg", pos: { left: "850px", top: "350px" }
+    },
+    cuatroTorres: {
+      titulo: "Cuatro torres", autor: "Jesús Mayagoitia", año: "1991", tecnica: "Acero pintado", esc: "160", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Cuatro torres.jpg", pos: { left: "1000px", top: "450px" }
+  
+   },
+    tresPilares: { titulo: "3 Pilares", autor: "desconocido", año: "desconocido", tecnica: "desconocido", esc: "desconocido", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "3 pilares.jpeg", pos: { left: "400px", top: "400px" } },
+    cascoBorregos: { titulo: "Casco Borregos", autor: "desconocido", año: "desconocido", tecnica: "desconocido", esc: "desconocido", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Casco borregos.jpeg", pos: { left: "400px", top: "400px" } },
+    equipoBorregos: { titulo: "Equipo Borregos", autor: "desconocido", año: "desconocido", tecnica: "desconocido", esc: "desconocido", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Equipo borrego.jpeg", pos: { left: "400px", top: "400px" } },
+    escalera: { titulo: "Escalera", autor: "desconocido", año: "desconocido", tecnica: "desconocido", esc: "desconocido", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Escalera.jpeg", pos: { left: "400px", top: "400px" } },
+    laCosaRosa: { titulo: "La cosa rosa", autor: "desconocido", año: "desconocido", tecnica: "desconocido", esc: "desconocido", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "La cosa rosa.jpeg", pos: { left: "598px", top: "360px" } },
+    unaSeñorita: { titulo: "Una señorita", autor: "desconocido", año: "desconocido", tecnica: "desconocido", esc: "desconocido", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Una señorita.jpeg", pos: { left: "400px", top: "400px" } },
+    relojSolar: { titulo: "Reloj Solar", autor: "desconocido", año: "desconocido", tecnica: "desconocido", esc: "desconocido", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Relog Solar.jpeg", pos: { left: "400px", top: "400px" } },
+    paseoDeLasCarreras: { titulo: "Paseo de las carreras", autor: "desconocido", año: "desconocido", tecnica: "desconocido", esc: "desconocido", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Paseo de las carreras.jpeg", pos: { left: "400px", top: "400px" } },
+    borrego: { titulo: "Borrego", autor: "desconocido", año: "desconocido", tecnica: "desconocido", esc: "desconocido", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Borrego.jpeg", pos: { left: "400px", top: "400px" } },
+    cabezaBorregos: { titulo: "Cabeza Borregos", autor: "desconocido", año: "desconocido", tecnica: "desconocido", esc: "desconocido", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Cabeza borregos.jpeg", pos: { left: "400px", top: "400px" } }
 
-  function zoomIn() {
-    escala += 0.1;
-    mapaContainer.style.transform = `scale(${escala})`;
-    mapaContainer.style.transformOrigin = "top left";
+  };
+
+
+  function mostrarObraArte(clave) {
+    const obra = obras[clave];
+    if (!obra) return;
+    const cont = document.getElementById("detalleObra");
+    cont.innerHTML = `
+      <div style="text-align: right;">
+        <button onclick="cerrarDetalleObra()" style="border:none; background:none; font-size:20px; cursor:pointer; line-height: 1;">&times;</button>
+      </div>
+      <h4>${obra.titulo}</h4>
+      <img src="${obra.imagen}" alt="${obra.titulo}" style="width: 100%; border-radius: 10px;" />
+      <p><strong>Autor:</strong> ${obra.autor}</p>
+      <p><strong>Año:</strong> ${obra.año}</p>
+      <p><strong>Técnica:</strong> ${obra.tecnica}</p>
+      <p><strong>ESC/</strong> ${obra.esc}</p>
+      <p><strong>Colección:</strong><br>${obra.coleccion}</p>
+    `;
+    cont.style.display = "block";
+    const marcadorExistente = document.getElementById("marcadorObra");
+    if (marcadorExistente) marcadorExistente.remove();
+    const mapa = document.getElementById("mapaContainer");
+    const marcador = document.createElement("div");
+    marcador.id = "marcadorObra";
+    marcador.style.position = "absolute";
+    marcador.style.left = obra.pos.left;
+    marcador.style.top = obra.pos.top;
+    marcador.style.width = "20px";
+    marcador.style.height = "20px";
+    marcador.style.borderRadius = "50%";
+    marcador.style.backgroundColor = "#1a73e8";
+    marcador.style.border = "3px solid white";
+    marcador.style.boxShadow = "0 0 10px rgba(0,0,0,0.5)";
+    marcador.style.zIndex = "1000";
+    marcador.style.transform = "translate(-50%, -50%)";
+    mapa.appendChild(marcador);
   }
 
-  function zoomOut() {
-    escala = Math.max(0.5, escala - 0.1);
-    mapaContainer.style.transform = `scale(${escala})`;
-    mapaContainer.style.transformOrigin = "top left";
+  function cerrarDetalleObra() {
+    document.getElementById("detalleObra").style.display = "none";
+    const marcador = document.getElementById("marcadorObra");
+    if (marcador) marcador.remove();
   }
-
-
 </script>
-
-</script>
-
-</script>
-
-</script>
-
 
 </body>
-
-
 </html>
