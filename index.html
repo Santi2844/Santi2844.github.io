@@ -95,24 +95,12 @@
 #mapa-container {
   margin-top: 150px;
 }
-#nombreUsuario {
-  position: fixed;
-  top: 10px;
-  right: 20px;
-  font-weight: bold;
-  font-size: 16px;
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 5px 10px;
-  border-radius: 8px;
-  z-index: 9999;
-}
 
 
   </style>
 </head>
 
 <body>
-<div id="nombreUsuario">Santiago Perez Arreola</div>
 
 
   <h1>Buscador de Salones - TEC</h1>
@@ -626,84 +614,6 @@ const historialBusquedas = [];
 
 </script>
 
-<script>
-let esModoNoche = false;
-
-function aplicarTema() {
-  const ahora = new Date();
-  const hora = ahora.getHours();
-  const minuto = ahora.getMinutes();
-
-  // Rango: 10:51 PM (22:51) hasta 10:53 PM (22:53)
-  const dentroDelRango = (hora === 18 && minuto >= 10 && minuto <= 12);
-
-  // Solo aplica cambios si cambia el estado
-  if (dentroDelRango !== esModoNoche) {
-    esModoNoche = dentroDelRango;
-
-    // Elementos a modificar
-    const body = document.body;
-    const menu = document.querySelector("#menu");
-    const menuObras = document.querySelector('div[style*="right: 20px"][style*="top: 100px"]');
-    const detalleObra = document.getElementById("detalleObra");
-
-    if (dentroDelRango) {
-      body.style.backgroundColor = "#121212";
-      body.style.color = "#eee";
-
-      if (menu) {
-        menu.style.backgroundColor = "#222";
-        menu.style.color = "#eee";
-      }
-
-      if (menuObras) {
-        menuObras.style.backgroundColor = "#222";
-        menuObras.style.color = "#eee";
-      }
-
-      if (detalleObra) {
-        detalleObra.style.backgroundColor = "#222";
-        detalleObra.style.color = "#eee";
-      }
-    } else {
-      body.style.backgroundColor = "#f0f0f0";
-      body.style.color = "#000";
-
-      if (menu) {
-        menu.style.backgroundColor = "#fff";
-        menu.style.color = "#000";
-      }
-
-      if (menuObras) {
-        menuObras.style.backgroundColor = "#fff";
-        menuObras.style.color = "#000";
-      }
-
-      if (detalleObra) {
-        detalleObra.style.backgroundColor = "#fff";
-        detalleObra.style.color = "#000";
-      }
-    }
-  }
-}
-
-// Ejecutar al cargar
-aplicarTema();
-
-// Verificar el tiempo real cada segundo
-setInterval(aplicarTema, 1000);
-</script>
-<!-- Botón para limpiar -->
-<button onclick="limpiarMapa()" style="margin-bottoM: 10x;">Limpiar</button>
-
-<script>
-  function limpiarMapa() {
-    document.getElementById("resaltado").style.display = "none";
-    document.getElementById("descripcion").innerText = "bienvenidos!";
-    cerrarDetalleObra(); // reutiliza tu función para cerrar obra
-  }
-
-</script>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -724,7 +634,7 @@ setInterval(aplicarTema, 1000);
     position: relative;
     width: 100%;
     height: 100vh; /* Ocupa toda la altura de la pantalla */
-    background-image: url('https://via.placeholder.com/1200x800/e0e0e0/808080?text=Fondo+del+Mapa');
+    background-image: #fff;
     background-size: cover;
   }
 
