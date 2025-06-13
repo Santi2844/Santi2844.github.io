@@ -107,13 +107,24 @@
   z-index: 9999;
 }
 
+#nombre {
+  position: fixed;
+  top: 40px;
+  right: 20px;
+  font-weight: bold;
+  font-size: 16px;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 5px 10px;
+  border-radius: 8px;
+  z-index: 9999;
+}
 
   </style>
 </head>
 
 <body>
-<div id="nombreUsuario">Santiago Perez Arreola
-
+<div id="nombreUsuario">Santiago Perez Arreola A01798818</div>
+<div id="nombre">Santiago Perez Arreola A01798818</div>
 
 
 
@@ -161,9 +172,10 @@
 <li onclick="buscarLugar('Wellbeing')">Wellbeing</li>
 <li onclick="buscarLugar('Zona de Computadoras')">Zona de Computadoras</li>
 <li onclick="buscarLugar('Esports')">Esports</li>
-<li onclick="buscarLugar('Wellbeing gym')">Wellbeing gym</li>
+
 <li onclick="buscarLugar('Postgrado')">Postgrado</li>
 <li onclick="buscarLugar('Alta direccion')">Alta direccion</li>
+<li onclick="buscarLugar('CEDETEC')">CEDETEC</li>
 <li onclick="buscarLugar('Area administrativa de productos TEC')">Area administrativa de productos TEC</li>
 <li onclick="buscarLugar('Area de comunicación administrativa del TEC')">Area de comunicación administrativa del TEC</li>
 <li onclick="buscarLugar('CCI-201')">CCI-201</li>
@@ -197,7 +209,7 @@
 <li onclick="buscarLugar('General Mexico Technology Center')">General Mexico Technology Center</li>
 <li onclick="buscarLugar('CDT2-603')">CDT2-603</li>
 <li onclick="buscarLugar('CDT2-604')">CDT2-604</li>
-<li onclick="buscarLugar('Laboratorio de análisis de movimientos VICOIN')">Laboratorio de análisis de movimientos VICOIN</li>
+<li onclick="buscarLugar('Laboratorio de análisis de movimientos VICOIN')">Laboratorio de análisis de movimientos BITCOIN</li>
 <li onclick="buscarLugar('Pool de impresión')">Pool de impresión</li>
 <li onclick="buscarLugar('Laboratorio de criptomonedas')">Laboratorio de criptomonedas</li>
 <li onclick="buscarLugar('CDT-502')">CDT-502</li>
@@ -247,7 +259,6 @@
 <li onclick="buscarLugar('Aulas 5')">Aulas 5</li>
 <li onclick="buscarLugar('Aulas 8')">Aulas 8</li>
 <li onclick="buscarLugar('SUM')">SUM</li>
-<li onclick="buscarLugar('Direccion')">Direccion</li>
 <li onclick="buscarLugar('Arena borregos')">Arena borregos</li>
 <li onclick="buscarLugar('Gimnasio Preparatoria')">Gimnasio Preparatoria</li>
 <li onclick="buscarLugar('Centro Deportivo Borregos')">Centro Deportivo Borregos</li>
@@ -255,12 +266,11 @@
 <li onclick="buscarLugar('Buluk')">Buluk</li>
 <li onclick="buscarLugar('Existum')">Existum</li>
 <li onclick="buscarLugar('Teatro')">Teatro</li>
-<li onclick="buscarLugar('Alberca')">alberca</li>
+<li onclick="buscarLugar('Alberca')">Alberca</li>
 <li onclick="buscarLugar('Pasillo Zarzamora')">Pasillo Zarzamora</li>
 <li onclick="buscarLugar('Relog Solar')">Relog Solar</li>
-<li onclick="buscarLugar('Tec service')">Tec service</li>
-<li onclick="buscarLugar('Oficina deportes')">Oficina_deportes</li>
-<li onclick="buscarLugar('Sala usos multiples')">Sala usos multiples</li>
+<li onclick="buscarLugar('Tec service')">Tec service borregos</li>
+<li onclick="buscarLugar('Oficina deportes')">Oficina deportes</li>
 <li onclick="buscarLugar('Asta bandera')">Asta bandera</li>
 <li onclick="buscarLugar('Teatro al aire libre')">Teatro al aire libre</li>
 <li onclick="buscarLugar('Cancha prepa')">Cancha prepa</li>
@@ -270,8 +280,8 @@
 <li onclick="buscarLugar('Multilabs 01')">Multilabs 01</li>
 <li onclick="buscarLugar('Multilabs 02')">Multilabs 02</li>
 <li onclick="buscarLugar('Tec services alumno')">Tec services alumno</li>
-<li onclick="buscarLugar('Tec services plataforma')">Tec services plataforma</li>
-<li onclick="buscarLugar('Consejeria_bienestar')">Consejeria_bienestar</li>
+<li onclick="buscarLugar('Tec services plataforma')">Tec services base prepa</li>
+<li onclick="buscarLugar('Consejeria_bienestar')">Consejeria bienestar</li>
 <li onclick="buscarLugar('Centro dignidad humana')">Centro dignidad humana</li>
 <li onclick="buscarLugar('Direccion prepa')">Direccion prepa</li>
 <li onclick="buscarLugar('Directores programa')">Directores programa</li>
@@ -279,6 +289,14 @@
 <li onclick="buscarLugar('Biblioteca Prepa')">Biblioteca Prepa</li>
 
 
+    <h2>Casetas</h2>
+    <ul>
+
+<li onclick="buscarLugar('Caseta abc')">Caseta principal de profesional (abc)</li>
+<li onclick="buscarLugar('Caseta e')">Caseta secundaria de profesional (edificio 2 y 3")</li>
+<li onclick="buscarLugar('Caseta F')">Caseta secundaria de profesional (centro de congresos)</li>
+<li onclick="buscarLugar('Caseta a')">Caseta principal de prepa (a)</li>
+<li onclick="buscarLugar('Caseta i')">Caseta secundatia de preparatoria (asta bandera)</li>
 
       
     </ul>
@@ -291,6 +309,15 @@
 
   <script>
     const posicionesEdificios = {
+"Caseta abc": { edificio: "NA", piso: "NA", descripcion: "Entrada principal al campus", x: 485, y: 400, salon: "NA" },
+"Caseta e": { edificio: "NA", piso: "NA", descripcion: "Justo entre el edificio 2 y 3", x: 715, y: 255, salon: "NA" },
+"Caseta F": { edificio: "NA", piso: "NA", descripcion: "En la parte de abajo de centro de congresos", x: 600, y: 480, salon: "NA" },
+
+"Caseta a": { edificio: "NA", piso: "NA", descripcion: "Se ubica en la parte superior arriba.", x: 250, y: 800, salon: "NA" },
+"Caseta i": { edificio: "NA", piso: "NA", descripcion: "En la parte de abajp en asta bandera", x: 480, y: 900, salon: "NA" },
+
+
+
 "Edificio I": { edificio: "2", piso: "NA", descripcion: "Departamento de Negocios y Sociales.", x: 680, y: 325, salon: "NA" },
 "Edificio II": { edificio: "2", piso: "NA", descripcion: "Departamento de Ingeniería y Ciencias.", x: 680, y: 280, salon: "NA" },
 "Edificio III": { edificio: "3", piso: "NA", descripcion: "Edificio 3.", x: 680, y: 230, salon: "NA" },
@@ -316,7 +343,7 @@
 "Wellbeing": { edificio: "IX", piso: "1", descripcion: "Área de bienestar, descanso y relajación.", x: 580, y: 250, salon: "NA" },
 "Zona de Computadoras": { edificio: "IX", piso: "1", descripcion: "La zona ideal para un gamer y un grupo de amigos.", x: 580, y: 250, salon: "NA" },
 "Esports": { edificio: "IX", piso: "1", descripcion: "Zona de Esports y competencias entre alumnos.", x: 580, y: 250, salon: "NA" },
-"Wellbeing gym": { edificio: "IX", piso: "1", descripcion: "Wellbeing.", x: 580, y: 250, salon: "NA" },
+
 "Postgrado": { edificio: "IX", piso: "2", descripcion: "Área de posgrado.", x: 580, y: 250, salon: "NA" },
 
 "Alta direccion": { edificio: "IX", piso: "2", descripcion: "Oficina de Alta Dirección.", x: 580, y: 250, salon: "NA" },
@@ -331,14 +358,15 @@
 "Galeria del arte": { edificio: "galeria del arte", piso: "NA", descripcion: "Galería de arte.", x: 675, y: 380, salon: "NA" },
 "Tec service Planta": { edificio: "Servicios de apoyo I", piso: "2", descripcion: "La sede principal de TEC service.", x: 560, y: 460, salon: "NA" },
 "Santander": { edificio: "Servicios de apoyo I", piso: "2", descripcion: "Dónde sacar dinero.", x: 560, y: 460, salon: "NA" },
-"Centro de Admisión": { edificio: "Servicios de apoyo I", piso: "1", descripcion: "Admisión.", x: 560, y: 460, salon: "NA" },
+"Centro de Admisión": { edificio: "Servicios de apoyo I", piso: "1", descripcion: "Centro de inscripcion para prepa o profe .", x: 560, y: 460, salon: "NA" },
 "Internacional": { edificio: "Servicios de apoyo I", piso: "3", descripcion: "Base de Internacional.", x: 560, y: 460, salon: "NA" },
 "Gimnasio Profesional": { edificio: "Servicios de apoyo", piso: "NA", descripcion: "Gimnasio.", x: 545, y: 540, salon: "NA" },
 
-"CAMP": { edificio: "CAMP", piso: "NA", descripcion: "NA.", x: 460, y: 520, salon: "NA" },
+"CAMP": { edificio: "CAMP", piso: "NA", descripcion: "NA", x: 460, y: 520, salon: "NA" },
 
 "Gimnasio Representativo": { edificio: "Gimnasio Tec Teams", piso: "NA", descripcion: "Gimnasio solo representativo", x: 470, y: 540, salon: "NA" },
 
+"CEDETEC": { edificio: "Cedetec", piso: "NA", descripcion: "Pasillo entre el cuerpo 1 2 y 3 ", x: 542, y: 350, salon: "NA" },
 
 "Laboratorio de ingeniería de materiales y automatización": { edificio: "Cedetec cuerpo 2", piso: "1", descripcion: "Laboratorio de ingeniería de materiales y automatización.", x: 542, y: 350, salon: "NA" },
 "Laboratorio de procesamiento de señales": { edificio: "Cedetec cuerpo 2", piso: "2", descripcion: "Laboratorio de procesamiento de señales.", x: 542, y: 350, salon: "CDT202L16" },
@@ -397,48 +425,58 @@
 
 
 
-"Edificio VII": { edificio: "6", piso: "NA", descripcion: "Edificio 6.", x: 310, y: 883, salon: "NA" },
-"Edificio VIII": { edificio: "9", piso: "NA", descripcion: "Edificio 9.", x: 350, y: 920, salon: "NA" },
+"Edificio VII": { edificio: "6", piso: "NA", descripcion: "Edificio 7.", x: 310, y: 883, salon: "NA" },
+"Edificio VIII": { edificio: "9", piso: "NA", descripcion: "Edificio 8.", x: 350, y: 920, salon: "NA" },
 
 
 "Cafeteria Preparatoria": { edificio: "8", piso: "5", descripcion: "Oficinas y aulas 5.", x: 300, y: 954, salon: "NA" },
 
-"Cancha Prepa": { edificio: "8", piso: "5", descripcion: "Oficinas y aulas 5.", x: 310, y: 983, salon: "NA" },
+"Cancha Prepa": { edificio: "8", piso: "5", descripcion: "Para jugar en comunidad", x: 310, y: 983, salon: "NA" },
 "Aulas 5": { edificio: "8", piso: "5", descripcion: "Oficinas y aulas 5.", x: 350, y: 920, salon: "NA" },
 "Aulas 8": { edificio: "8", piso: "6", descripcion: "Oficinas y aulas 8.", x: 350, y: 920, salon: "NA" },
-"SUM": { edificio: "7", piso: "1", descripcion: "Sala Zoom.", x: 542, y: 350                         , salon: "NA" },
+"SUM": { edificio: "7", piso: "1", descripcion: "Salon de Usos Multiples.", x: 310, y: 883 , salon: "NA" },
 
 "Arena borregos": { edificio: "IX", piso: "1", descripcion: "Arena Borregos.", x: 315, y: 793, salon: "NA" },
 
 "Gimnasio Preparatoria": { edificio: "Servicios de apoyo", piso: "NA", descripcion: "Un gym.", x: 315, y: 793, salon: "NA" },
 "Centro Deportivo Borregos": { edificio: "NA", piso: "NA", descripcion: "Canchas pequeñas.",  x: 530, y: 642, salon: "NA" },
 "Estadio borregos": { edificio: "NA", piso: "NA", descripcion: "Un lugar de partidos de todo tipo (¡VAMOS BORREGOS!).", x: 460, y: 620, salon: "NA" },
+
+"Tec service": { edificio: "NA", piso: "NA", descripcion: "Tec service borregos", x: 350, y: 920, salon: "NA" },
+
 "Buluk": { edificio: "7", piso: "1", descripcion: "Buluk", x: 350, y: 920, salon: "NA" },
 "Existum": { edificio: "1", piso: "1", descripcion: "Existum.", x: 350, y: 920, salon: "NA" },
 "Teatro": { edificio: "Teatro", piso: "3", descripcion: "Un lugar de arte.", x: 356, y: 720, salon: "NA" },
-"Alberca": { edificio: "Teatro", piso: "3", descripcion: "Un lugar de arte.", x: 356, y: 720, salon: "NA" },
+"Alberca": { edificio: "Teatro", piso: "3", descripcion: "Para nadar!.", x: 356, y: 680, salon: "NA" },
 
 "Pasillo Zarzamora": { edificio: "NA", piso: "NA", descripcion: "Un pasillo lleno de eventos.", x: 320, y: 850, salon: "NA" },
 "Relog Solar": { edificio: "NA", piso: "NA", descripcion: "Un lugar para hablar con amigos.", x: 320, y: 850, salon: "NA" },
 "Tec service Alumnos": { edificio: "8", piso: "3", descripcion: "La sede principal de Tec service.", x: 350, y: 920, salon: "NA" },
 
-  "Oficina deportes": { edificio: "NA", piso: "NA", descripcion: "Oficina de deportes.", x: 315, y: 793, salon: "NA" },
-  "Sala usos multiples": { edificio: "NA", piso: "NA", descripcion: "Sala de usos múltiples.", x: 310, y: 883, salon: "NA" },
+
+  "Oficina deportes": { edificio: "NA", piso: "2", descripcion: "Oficina de deportes.", x: 315, y: 793, salon: "NA" },
   "Teatro al aire libre": { edificio: "NA", piso: "NA", descripcion: "Teatro al aire libre.", x: 370, y: 860, salon: "NA" },
   "Asta bandera": { edificio: "NA", piso: "NA", descripcion: "Asta bandera.", x: 370, y: 895, salon: "NA" },
-  "Aula magna": { edificio: "NA", piso: "NA", descripcion: "Aula magna.", x: 315, y: 793 , salon: "8402" },
-  "Sala profesores": { edificio: "NA", piso: "NA", descripcion: "Sala de profesores.", x: 315, y: 793, salon: "NA" },
-  "Centro servicios": { edificio: "NA", piso: "NA", descripcion: "Centro de servicios.", x: 315, y: 793, salon: "NA" },
-  "Multilabs 01": { edificio: "NA", piso: "NA", descripcion: "8301 multilabs 01.", x: 315, y: 793, salon: "8301" },
-  "Multilabs 02": { edificio: "NA", piso: "NA", descripcion: "8302 multilabs 02.", x: 315, y: 793, salon: "8302" },
-  "Tec services alumno": { edificio: "NA", piso: "NA", descripcion: "Tec services alumno.", x: 315, y: 793, salon: "NA" },
-  "Tec services plataforma": { edificio: "NA", piso: "NA", descripcion: "Tec services plataforma.", x: 315, y: 793, salon: "NA" },
-  "Consejeria bienestar": { edificio: "NA", piso: "NA", descripcion: "Consejería y bienestar.", x: 315, y: 793, salon: "NA" },
-  "Centro dignidad humana": { edificio: "NA", piso: "NA", descripcion: "Centro dignidad humano.", x: 315, y: 793, salon: "NA" },
-  "Direccion prepa": { edificio: "NA", piso: "NA", descripcion: "Dirección prepa.", x: 315, y: 793, salon: "NA" },
-  "Directores programa": { edificio: "NA", piso: "NA", descripcion: "Directores de programa.", x: 315, y: 793, salon: "NA" },
-  "Tec services colaboradores": { edificio: "NA", piso: "NA", descripcion: "Tec services colaboradores.", x: 315, y: 793, salon: "NA" },
+  "Aula magna": { edificio: "8", piso: "4", descripcion: "Aula magna.",  x: 350, y: 920 , salon: "8402" },
+  "Sala profesores": { edificio: "8", piso: "4", descripcion: "Sala de profesores.",  x: 350, y: 920, salon: "NA" },
+  "Centro servicios": { edificio: "8", piso: "3", descripcion: "Centro de servicios.", x: 350, y: 920, salon: "NA" },
+  
+  "Multilabs 01": { edificio: "8", piso: "3", descripcion: "8301 multilabs 01.", x: 350, y: 920, salon: "8301" },
+  "Multilabs 02": { edificio: "8", piso: "3", descripcion: "8302 multilabs 02.", x: 350, y: 920, salon: "8302" },
+  "Tec services alumno": { edificio: "8", piso: "1", descripcion: "Tec services alumno.", x: 350, y: 920, salon: "NA" },
+  "Tec services plataforma": { edificio: "8", piso: "3", descripcion: "Tec services plataforma.", x: 350, y: 920, salon: "NA" },
+  "Consejeria bienestar": { edificio: "8", piso: "NA", descripcion: "Consejería y bienestar.", x: 350, y: 920, salon: "NA" },
+  "Centro dignidad humana": { edificio: "8", piso: "NA", descripcion: "Centro dignidad humano.", x: 350, y: 920, salon: "NA" },
+  "Direccion prepa": { edificio: "8", piso: "3", descripcion: "Dirección prepa.", x: 350, y: 920, salon: "NA" },
+  "Directores programa": { edificio: "8", piso: "3", descripcion: "Directores de programa.", x: 350, y: 920, salon: "NA" },
+  "Tec services colaboradores": { edificio: "8", piso: "3", descripcion: "Tec services colaboradores.", x: 350, y: 920, salon: "NA" },
+  
+  
+  
+  
   "CEDDIE": { edificio: "NA", piso: "NA", descripcion: "CEDDIE.", x: 505, y: 510, salon: "NA" },
+
+
 
   "Ingenieria": { edificio: "2", piso: "1", descripcion: "Departamento de Ingeniería.",  x: 680, y: 280, salon: "NA" },
   "Ciencias": { edificio: "2", piso: "2", descripcion: "Departamento de Ciencias.",  x: 680, y: 280, salon: "NA" },
