@@ -622,9 +622,37 @@ const historialBusquedas = [];
     }
   });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
 
 </script>
+
+
+
+
+
+
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -641,14 +669,15 @@ const historialBusquedas = [];
     padding: 0;
   }
 
-  /* Contenedor del mapa o imagen de fondo (simulado) */
-  #mapaContainer {
-    position: relative;
-    width: 100%;
-    height: 100vh; /* Ocupa toda la altura de la pantalla */
-    background-image: #fff;
-    background-size: cover;
-  }
+    #mapaContainer {
+  position: relative;
+  width: 100%;
+  background-color: #fff;
+  background-size: cover;
+  overflow: hidden;
+}
+
+  
 
   /* --- INICIO DE CAMBIOS --- */
 
@@ -732,32 +761,15 @@ const historialBusquedas = [];
       <li onclick="mostrarObraArte('rehilete')">Rehilete</li>
       <li onclick="mostrarObraArte('luna')">Luna</li>
       <li onclick="mostrarObraArte('nebulosa')">Nebulosa</li>
-      <li onclick="mostrarObraArte('encuentroXX')">Encuentro de aniversario XX</li>
-      <li onclick="mostrarObraArte('clytia')">Clytia</li>
-      <li onclick="mostrarObraArte('arcoOxidado')">Arco oxidado</li>
-      <li onclick="mostrarObraArte('sorca')">Sorca</li>
-      <li onclick="mostrarObraArte('aveDos')">Ave dos</li>
-      <li onclick="mostrarObraArte('memoriaBronce')">Memoria en bronce</li>
-      <li onclick="mostrarObraArte('mitologiaNucleo')">La mitología del núcleo</li>
-      <li onclick="mostrarObraArte('cuatroTorres')">Cuatro torres</li>
-      <li onclick="mostrarObraArte('tresPilares')">3 Pilares</li>
-      <li onclick="mostrarObraArte('cascoBorregos')">Casco Borregos</li>
-      <li onclick="mostrarObraArte('equipoBorregos')">Equipo Borregos</li>
-      <li onclick="mostrarObraArte('escalera')">Escalera</li>
-      <li onclick="mostrarObraArte('laCosaRosa')">La cosa rosa</li>
-      <li onclick="mostrarObraArte('unaSeñorita')">Una señorita</li>
-      <li onclick="mostrarObraArte('relojSolar')">Reloj Solar</li>
-      <li onclick="mostrarObraArte('paseoDeLasCarreras')">Paseo de las carreras</li>
-      <li onclick="mostrarObraArte('borrego')">Borrego</li>
-      <li onclick="mostrarObraArte('cabezaBorregos')">Cabeza Borregos</li>
+
+
     </ul>
   </div>
 </div>
 
 
-<div id="detalleObra" class="detalle-obra-panel">
-  
-</div>  </div>
+<div id="detalleObra" style="position: absolute; right: 280px; top: 150px; background: white; padding: 15px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.2); width: 300px; display: none; z-index: 1001;">
+  </div>
 
 <script>
   // El JavaScript no necesita cambios.
@@ -777,42 +789,7 @@ const historialBusquedas = [];
     nebulosa: {
       titulo: "Nebulosa", autor: "Salvador Manzano", año: "1982", tecnica: "Metal esmaltado", esc: "207", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Nebulosa.jpg", pos: { left: "400px", top: "400px" }
     },
-    encuentroXX: {
-      titulo: "Encuentro de aniversario XX", autor: "Jesús Mayagoitia", año: "1996", tecnica: "Acero pintado", esc: "159", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Encuentro de aniversario XX.jpg", pos: { left: "900px", top: "600px" }
-    },
-    clytia: {
-      titulo: "Clytia", autor: "Yvonne Domenge", año: "2001", tecnica: "Acero dulce", esc: "152", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Clytia.jpg", pos: { left: "300px", top: "250px" }
-    },
-    arcoOxidado: {
-      titulo: "Arco oxidado", autor: "Sebastián", año: "1995", tecnica: "Escultura en hierro", esc: "151", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Arco oxidado.jpg", pos: { left: "700px", top: "200px" }
-    },
-    sorca: {
-      titulo: "Sorca", autor: "Becky Guttin", año: "1994", tecnica: "Placa de Cobre", esc: "087", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Sorca.jpg", pos: { left: "650px", top: "650px" }
-    },
-    aveDos: {
-      titulo: "Ave dos", autor: "Hersúa", año: "1993", tecnica: "Bronce", esc: "088", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Ave dos.jpg", pos: { left: "500px", top: "150px" }
-    },
-    memoriaBronce: {
-      titulo: "Memoria en bronce", autor: "Irma Palacios", año: "desconocido", tecnica: "Bronce a la cera perdida", esc: "083", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Memoria en bronce.jpg", pos: { left: "450px", top: "700px" }
-    },
-    mitologiaNucleo: {
-      titulo: "La mitología del núcleo", autor: "Kiyoto Ota", año: "1986", tecnica: "Plomo y fibra de vidrio", esc: "076", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "La mitología del núcleo.jpg", pos: { left: "850px", top: "350px" }
-    },
-    cuatroTorres: {
-      titulo: "Cuatro torres", autor: "Jesús Mayagoitia", año: "1991", tecnica: "Acero pintado", esc: "160", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Cuatro torres.jpg", pos: { left: "1000px", top: "450px" }
   
-   },
-    tresPilares: { titulo: "3 Pilares", autor: "desconocido", año: "desconocido", tecnica: "desconocido", esc: "desconocido", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "3 pilares.jpeg", pos: { left: "400px", top: "400px" } },
-    cascoBorregos: { titulo: "Casco Borregos", autor: "desconocido", año: "desconocido", tecnica: "desconocido", esc: "desconocido", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Casco borregos.jpeg", pos: { left: "400px", top: "400px" } },
-    equipoBorregos: { titulo: "Equipo Borregos", autor: "desconocido", año: "desconocido", tecnica: "desconocido", esc: "desconocido", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Equipo borrego.jpeg", pos: { left: "400px", top: "400px" } },
-    escalera: { titulo: "Escalera", autor: "desconocido", año: "desconocido", tecnica: "desconocido", esc: "desconocido", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Escalera.jpeg", pos: { left: "400px", top: "400px" } },
-    laCosaRosa: { titulo: "La cosa rosa", autor: "desconocido", año: "desconocido", tecnica: "desconocido", esc: "desconocido", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "La cosa rosa.jpeg", pos: { left: "598px", top: "360px" } },
-    unaSeñorita: { titulo: "Una señorita", autor: "desconocido", año: "desconocido", tecnica: "desconocido", esc: "desconocido", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Una señorita.jpeg", pos: { left: "400px", top: "400px" } },
-    relojSolar: { titulo: "Reloj Solar", autor: "desconocido", año: "desconocido", tecnica: "desconocido", esc: "desconocido", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Relog Solar.jpeg", pos: { left: "400px", top: "400px" } },
-    paseoDeLasCarreras: { titulo: "Paseo de las carreras", autor: "desconocido", año: "desconocido", tecnica: "desconocido", esc: "desconocido", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Paseo de las carreras.jpeg", pos: { left: "400px", top: "400px" } },
-    borrego: { titulo: "Borrego", autor: "desconocido", año: "desconocido", tecnica: "desconocido", esc: "desconocido", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Borrego.jpeg", pos: { left: "400px", top: "400px" } },
-    cabezaBorregos: { titulo: "Cabeza Borregos", autor: "desconocido", año: "desconocido", tecnica: "desconocido", esc: "desconocido", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Cabeza borregos.jpeg", pos: { left: "400px", top: "400px" } }
-
   };
 
 
@@ -832,8 +809,7 @@ const historialBusquedas = [];
       <p><strong>ESC/</strong> ${obra.esc}</p>
       <p><strong>Colección:</strong><br>${obra.coleccion}</p>
     `;
-    cont.classList.add('visible'); 
-
+    cont.style.display = "block";
     const marcadorExistente = document.getElementById("marcadorObra");
     if (marcadorExistente) marcadorExistente.remove();
     const mapa = document.getElementById("mapaContainer");
@@ -854,14 +830,12 @@ const historialBusquedas = [];
   }
 
   function cerrarDetalleObra() {
-document.getElementById("detalleObra").classList.remove('visible');
+    document.getElementById("detalleObra").style.display = "none";
     const marcador = document.getElementById("marcadorObra");
     if (marcador) marcador.remove();
   }
 </script>
 
-</body>
-</html>
 <body>
   <button id="menuToggleBtn" class="menu-toggle-button">☰</button>
   <div id="menuOverlay" class="menu-overlay"></div>
@@ -954,61 +928,7 @@ document.getElementById("detalleObra").classList.remove('visible');
     z-index: 1003;
   }
 }
-
-
-
-/* --- ESTILOS PARA EL PANEL DE DETALLES DE OBRA --- */
-.detalle-obra-panel {
-  /* Estilos visuales que antes estaban en línea */
-  background: white;
-  padding: 15px;
-  border-radius: 15px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
-  width: 300px;
-  z-index: 1003; /* Lo ponemos por encima del overlay y del menú */
-  
-  /* Lo ocultamos por defecto */
-  display: none;
-
-  /* --- Posicionamiento para ESCRITORIO --- */
-  position: absolute;
-  right: 280px; 
-  top: 150px;
-}
-
-/* Clase para hacerlo visible con JavaScript */
-.detalle-obra-panel.visible {
-  display: block;
-}
-
-
-/* DENTRO DE TU MEDIA QUERY EXISTENTE, AÑADE ESTO */
-@media (max-width: 768px) {
-  
-  /* ... (aquí ya tienes los estilos para #menuLateral y .menu-toggle-button) ... */
-
-
-  /* --- AÑADIR ESTILOS PARA EL PANEL DE DETALLES EN MÓVIL --- */
-  .detalle-obra-panel {
-    /* Lo convertimos en un modal centrado */
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%; /* Hacemos que ocupe el 90% del ancho del móvil */
-    max-width: 400px; /* Pero con un límite de ancho */
-    
-    /* Reseteamos la posición de escritorio */
-    right: auto;
-    top: 40%; /* Un poco más arriba del centro se ve mejor */
-  }
-
-} /* Fin del media query */
-
-
-
 </style>
-
 <script>
   // --- INICIO DE CÓDIGO PARA MENÚ MÓVIL ---
 
@@ -1056,8 +976,7 @@ function mostrarObraArte(clave) {
     <p><strong>ESC/</strong> ${obra.esc}</p>
     <p><strong>Colección:</strong><br>${obra.coleccion}</p>
   `;
-  cont.classList.add('visible'); 
-
+  cont.style.display = "block";
   
   // ... (el resto de tu código para poner el marcador)
   const marcadorExistente = document.getElementById("marcadorObra");
@@ -1087,8 +1006,5 @@ function mostrarObraArte(clave) {
 
   <div id="mapaContainer">
     </div>
-  
-  </body>
-  <script>
-    
+
   </script>
