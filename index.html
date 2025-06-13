@@ -653,7 +653,6 @@ const historialBusquedas = [];
   #mapaContainer {
     width: 100%;
     height: 100vh;
-    background-image: url('https://i.imgur.com/G09eZUa.png'); /* URL de tu mapa */
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -766,9 +765,31 @@ const historialBusquedas = [];
   <h3>Obras de Arte</h3>
   <div class="scroll-container">
     <ul id="listaObras">
-        <li onclick="mostrarObraArte('rehilete')">Rehilete</li>
-        <li onclick="mostrarObraArte('luna')">Luna</li>
-        <li onclick="mostrarObraArte('aveDos')">Ave dos</li>
+      <li onclick="mostrarObraArte('rehilete')">Rehilete</li>
+      <li onclick="mostrarObraArte('luna')">Luna</li>   
+      <li onclick="mostrarObraArte('cosaRoja')">Cosa Roja</li>
+      <li onclick="mostrarObraArte('cosaAzul')">Cosa Azul</li>
+      <li onclick="mostrarObraArte('rehilete')">Rehilete</li>
+      <li onclick="mostrarObraArte('luna')">Luna</li>
+      <li onclick="mostrarObraArte('nebulosa')">Nebulosa</li>
+      <li onclick="mostrarObraArte('encuentroXX')">Encuentro de aniversario XX</li>
+      <li onclick="mostrarObraArte('clytia')">Clytia</li>
+      <li onclick="mostrarObraArte('arcoOxidado')">Arco oxidado</li>
+      <li onclick="mostrarObraArte('sorca')">Sorca</li>
+      <li onclick="mostrarObraArte('aveDos')">Ave dos</li>
+      <li onclick="mostrarObraArte('memoriaBronce')">Memoria en bronce</li>
+      <li onclick="mostrarObraArte('mitologiaNucleo')">La mitología del núcleo</li>
+      <li onclick="mostrarObraArte('cuatroTorres')">Cuatro torres</li>
+      <li onclick="mostrarObraArte('tresPilares')">3 Pilares</li>
+      <li onclick="mostrarObraArte('cascoBorregos')">Casco Borregos</li>
+      <li onclick="mostrarObraArte('equipoBorregos')">Equipo Borregos</li>
+      <li onclick="mostrarObraArte('escalera')">Escalera</li>
+      <li onclick="mostrarObraArte('laCosaRosa')">La cosa rosa</li>
+      <li onclick="mostrarObraArte('unaSeñorita')">Una señorita</li>
+      <li onclick="mostrarObraArte('relojSolar')">Reloj Solar</li>
+      <li onclick="mostrarObraArte('paseoDeLasCarreras')">Paseo de las carreras</li>
+      <li onclick="mostrarObraArte('borrego')">Borrego</li>
+      <li onclick="mostrarObraArte('cabezaBorregos')">Cabeza Borregos</li>
     </ul>
   </div>
 </div>
@@ -780,15 +801,51 @@ const historialBusquedas = [];
 <script>
 // --- Base de datos de las obras ---
 const obras = {
-  rehilete: {
-    titulo: "Rehilete", autor: "Miguel Peraza", año: "2006", tecnica: "Aluminio pintado y fierro", imagen: "https://i.imgur.com/vH0b3o4.jpeg"
-  },
-  luna: {
-    titulo: "Luna", autor: "Juan Soriano", año: "2002", tecnica: "Bronce a la cera perdida", imagen: "https://via.placeholder.com/400x300.png?text=Imagen+Luna"
-  },
-  aveDos: {
-    titulo: "Ave dos", autor: "Hersúa", año: "1993", tecnica: "Bronce", imagen: "https://i.imgur.com/gK5yYc5.jpeg" // Usando la imagen de tu screenshot
-  }
+    rehilete: { 
+      titulo: "Rehilete", autor: "Miguel Peraza", año: "2006", tecnica: "Aluminio pintado y fierro", esc: "375", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Rehilete.jpg", pos: { left: "600px", top: "300px" }
+    },
+    luna: {
+      titulo: "Luna", autor: "Juan Soriano", año: "2002", tecnica: "Bronce a la cera perdida", esc: "243", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Luna.jpg", pos: { left: "550px", top: "550px" }
+    },
+    nebulosa: {
+      titulo: "Nebulosa", autor: "Salvador Manzano", año: "1982", tecnica: "Metal esmaltado", esc: "207", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Nebulosa.jpg", pos: { left: "400px", top: "400px" }
+    },
+    encuentroXX: {
+      titulo: "Encuentro de aniversario XX", autor: "Jesús Mayagoitia", año: "1996", tecnica: "Acero pintado", esc: "159", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Encuentro de aniversario XX.jpg", pos: { left: "900px", top: "600px" }
+    },
+    clytia: {
+      titulo: "Clytia", autor: "Yvonne Domenge", año: "2001", tecnica: "Acero dulce", esc: "152", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Clytia.jpg", pos: { left: "300px", top: "250px" }
+    },
+    arcoOxidado: {
+      titulo: "Arco oxidado", autor: "Sebastián", año: "1995", tecnica: "Escultura en hierro", esc: "151", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Arco oxidado.jpg", pos: { left: "700px", top: "200px" }
+    },
+    sorca: {
+      titulo: "Sorca", autor: "Becky Guttin", año: "1994", tecnica: "Placa de Cobre", esc: "087", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Sorca.jpg", pos: { left: "650px", top: "650px" }
+    },
+    aveDos: {
+      titulo: "Ave dos", autor: "Hersúa", año: "1993", tecnica: "Bronce", esc: "088", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Ave dos.jpg", pos: { left: "500px", top: "150px" }
+    },
+    memoriaBronce: {
+      titulo: "Memoria en bronce", autor: "Irma Palacios", año: "desconocido", tecnica: "Bronce a la cera perdida", esc: "083", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Memoria en bronce.jpg", pos: { left: "450px", top: "700px" }
+    },
+    mitologiaNucleo: {
+      titulo: "La mitología del núcleo", autor: "Kiyoto Ota", año: "1986", tecnica: "Plomo y fibra de vidrio", esc: "076", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "La mitología del núcleo.jpg", pos: { left: "850px", top: "350px" }
+    },
+    cuatroTorres: {
+      titulo: "Cuatro torres", autor: "Jesús Mayagoitia", año: "1991", tecnica: "Acero pintado", esc: "160", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Cuatro torres.jpg", pos: { left: "1000px", top: "450px" }
+  
+   },
+    tresPilares: { titulo: "3 Pilares", autor: "desconocido", año: "desconocido", tecnica: "desconocido", esc: "desconocido", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "3 pilares.jpeg", pos: { left: "400px", top: "400px" } },
+    cascoBorregos: { titulo: "Casco Borregos", autor: "desconocido", año: "desconocido", tecnica: "desconocido", esc: "desconocido", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Casco borregos.jpeg", pos: { left: "400px", top: "400px" } },
+    equipoBorregos: { titulo: "Equipo Borregos", autor: "desconocido", año: "desconocido", tecnica: "desconocido", esc: "desconocido", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Equipo borrego.jpeg", pos: { left: "400px", top: "400px" } },
+    escalera: { titulo: "Escalera", autor: "desconocido", año: "desconocido", tecnica: "desconocido", esc: "desconocido", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Escalera.jpeg", pos: { left: "400px", top: "400px" } },
+    laCosaRosa: { titulo: "La cosa rosa", autor: "desconocido", año: "desconocido", tecnica: "desconocido", esc: "desconocido", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "La cosa rosa.jpeg", pos: { left: "598px", top: "360px" } },
+    unaSeñorita: { titulo: "Una señorita", autor: "desconocido", año: "desconocido", tecnica: "desconocido", esc: "desconocido", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Una señorita.jpeg", pos: { left: "400px", top: "400px" } },
+    relojSolar: { titulo: "Reloj Solar", autor: "desconocido", año: "desconocido", tecnica: "desconocido", esc: "desconocido", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Relog Solar.jpeg", pos: { left: "400px", top: "400px" } },
+    paseoDeLasCarreras: { titulo: "Paseo de las carreras", autor: "desconocido", año: "desconocido", tecnica: "desconocido", esc: "desconocido", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Paseo de las carreras.jpeg", pos: { left: "400px", top: "400px" } },
+    borrego: { titulo: "Borrego", autor: "desconocido", año: "desconocido", tecnica: "desconocido", esc: "desconocido", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Borrego.jpeg", pos: { left: "400px", top: "400px" } },
+    cabezaBorregos: { titulo: "Cabeza Borregos", autor: "desconocido", año: "desconocido", tecnica: "desconocido", esc: "desconocido", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "Cabeza borregos.jpeg", pos: { left: "400px", top: "400px" } }
+
 };
 
 // --- Seleccionamos los elementos del DOM una sola vez ---
