@@ -112,7 +112,7 @@
 </head>
 
 <body>
-<div id="nombreUsuario">Sant</div>
+<div id="nombreUsuario">Santaaasasasa</div>
 
 
 
@@ -641,7 +641,7 @@ const historialBusquedas = [];
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Galería de Arte</title>
+<title>Galería de Arte - Centrada</title>
 <style>
   /* --- ESTILOS GENERALES --- */
   body {
@@ -651,19 +651,90 @@ const historialBusquedas = [];
   }
 
   #mapaContainer {
-    position: relative;
     width: 100%;
     height: 100vh;
-    background-image: url('https://i.imgur.com/G09eZUa.png'); /* URL del mapa */
+    background-image: url('https://i.imgur.com/G09eZUa.png'); /* URL de tu mapa */
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     background-color: #f0f0f0;
   }
 
-  /* --- ESTILOS MENÚ LATERAL (ESCRITORIO) --- */
+  /* --- INICIO DE LA SECCIÓN IMPORTANTE: EL MODAL Y EL OVERLAY --- */
+
+  /* Fondo oscuro que cubre toda la pantalla */
+  .modal-overlay {
+    display: none; /* Oculto hasta que se llama con JS */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.65); /* Más oscuro para mejor foco */
+    z-index: 1001; /* Por encima de todo, excepto el modal */
+  }
+
+  /* La ventana de detalle que QUEREMOS EN EL CENTRO */
+  #detalleObra {
+    display: none; /* Oculto hasta que se llama con JS */
+    
+    /* ESTAS 4 LÍNEAS SON LA CLAVE DEL CENTRADO PERFECTO */
+    position: fixed;                  /* Se posiciona respecto a la ventana del navegador */
+    top: 50%;                         /* Lo empuja hacia abajo por la mitad de la altura de la pantalla */
+    left: 50%;                        /* Lo empuja hacia la derecha por la mitad del ancho de la pantalla */
+    transform: translate(-50%, -50%); /* Lo mueve hacia atrás la mitad de SU PROPIO tamaño, centrando la caja */
+
+    background: white;
+    padding: 25px;
+    padding-top: 45px; /* Más espacio arriba para el botón de cierre */
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    width: 90%;
+    max-width: 450px; /* Un tamaño ideal para el modal */
+    z-index: 1002; /* Por encima del fondo oscuro */
+    max-height: 90vh;
+    overflow-y: auto; /* Scroll si el contenido es muy largo */
+  }
+
+  /* El botón 'X' para cerrar, posicionado DENTRO del modal */
+  #detalleObra .close-button {
+    position: absolute; /* Se posiciona relativo a su padre (#detalleObra) */
+    top: 10px;
+    right: 15px;
+    border: none;
+    background: none;
+    font-size: 30px;
+    font-weight: bold;
+    color: #999;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+  }
+  #detalleObra .close-button:hover {
+    color: #000;
+  }
+
+  /* Estilos para el contenido del modal */
+  #detalleObra h4 {
+    margin: 0 0 15px 0;
+    font-size: 1.5em;
+  }
+  #detalleObra img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+  #detalleObra p {
+    margin: 8px 0;
+    line-height: 1.5;
+  }
+  
+  /* --- FIN DE LA SECCIÓN IMPORTANTE --- */
+
+
+  /* --- MENÚ LATERAL (para no afectar el resto de tu diseño) --- */
   #menuLateral {
-    position: absolute;
+    position: fixed; /* Fijo para que no se oculte con el modal */
     right: 20px;
     top: 70px;
     background: white;
@@ -676,162 +747,20 @@ const historialBusquedas = [];
   }
 
   #menuLateral h3 {
-    padding: 15px 20px;
-    margin: 0;
-    font-size: 1.1em;
-    border-bottom: 1px solid #eee;
+    padding: 15px 20px; margin: 0; font-size: 1.1em; border-bottom: 1px solid #eee;
   }
+  .scroll-container { max-height: 50vh; overflow-y: auto; }
+  #listaObras { list-style-type: none; padding: 10px 20px; margin: 0; }
+  #listaObras li { cursor: pointer; color: #1a73e8; padding: 8px 0; }
+  #listaObras li:hover { color: #0d47a1; }
+  
+  .menu-toggle-button, .mobile-overlay { display: none; } /* Ocultamos la lógica móvil si no es necesaria para simplificar */
 
-  .scroll-container {
-    max-height: 50vh;
-    overflow-y: auto;
-  }
-
-  #listaObras {
-    list-style-type: none;
-    padding: 10px 20px;
-    margin: 0;
-  }
-
-  #listaObras li {
-    cursor: pointer;
-    color: #1a73e8;
-    padding: 8px 0;
-    transition: background-color 0.2s;
-  }
-
-  #listaObras li:hover {
-    color: #0d47a1;
-  }
-
-  /* --- ESTILOS PARA LA VENTANA MODAL --- */
-
-  /* Fondo oscuro semitransparente */
-  .modal-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    z-index: 1001;
-  }
-
-  /* Contenedor del detalle de la obra (el modal) */
-  #detalleObra {
-    display: none;
-    
-    /* --- REGLA CORREGIDA CON !IMPORTANT --- */
-    position: fixed !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    width: 90%;
-    max-width: 500px;
-    z-index: 1002;
-    max-height: 90vh;
-    overflow-y: auto;
-  }
-
-  #detalleObra .close-button {
-    border: none;
-    background: none;
-    font-size: 28px;
-    cursor: pointer;
-    line-height: 1;
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    color: #888;
-  }
-   #detalleObra .close-button:hover {
-    color: #000;
-   }
-
-  #detalleObra h4 {
-    margin-top: 0;
-  }
-
-  #detalleObra img {
-    width: 100%;
-    border-radius: 10px;
-    margin-bottom: 15px;
-  }
-
-  /* --- ESTILOS PARA MENÚ MÓVIL --- */
-  .menu-toggle-button {
-    position: fixed;
-    top: 15px;
-    right: 15px;
-    z-index: 1000;
-    width: 50px;
-    height: 50px;
-    background-color: white;
-    border: none;
-    border-radius: 50%;
-    font-size: 24px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    cursor: pointer;
-    display: none;
-  }
-
-  .mobile-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5);
-    z-index: 999;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease-in-out;
-  }
-
-  .mobile-overlay.visible {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  @media (max-width: 768px) {
-    .menu-toggle-button {
-      display: block;
-    }
-
-    #menuLateral {
-      position: fixed;
-      top: 0;
-      right: 0;
-      height: 100%;
-      width: 85%;
-      max-width: 320px;
-      transform: translateX(100%);
-      transition: transform 0.3s ease-in-out;
-      border-radius: 0;
-      top: 0;
-    }
-
-    #menuLateral.visible {
-      transform: translateX(0);
-    }
-
-    #menuLateral .scroll-container {
-      height: calc(100% - 70px);
-    }
-  }
 </style>
 </head>
 <body>
 
 <div id="mapaContainer"></div>
-<button id="menuToggleBtn" class="menu-toggle-button">☰</button>
-<div id="mobileMenuOverlay" class="mobile-overlay"></div>
 
 <div id="menuLateral">
   <h3>Obras de Arte</h3>
@@ -839,44 +768,42 @@ const historialBusquedas = [];
     <ul id="listaObras">
         <li onclick="mostrarObraArte('rehilete')">Rehilete</li>
         <li onclick="mostrarObraArte('luna')">Luna</li>
-        <li onclick="mostrarObraArte('nebulosa')">Nebulosa</li>
         <li onclick="mostrarObraArte('aveDos')">Ave dos</li>
     </ul>
   </div>
 </div>
 
 <div id="detalleOverlay" class="modal-overlay"></div>
-
 <div id="detalleObra">
   </div>
 
 <script>
-// --- BASE DE DATOS DE OBRAS ---
+// --- Base de datos de las obras ---
 const obras = {
   rehilete: {
-    titulo: "Rehilete", autor: "Miguel Peraza", año: "2006", tecnica: "Aluminio pintado y fierro", esc: "375", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "https://i.imgur.com/vH0b3o4.jpeg", pos: { left: "22%", top: "25%" }
+    titulo: "Rehilete", autor: "Miguel Peraza", año: "2006", tecnica: "Aluminio pintado y fierro", imagen: "https://i.imgur.com/vH0b3o4.jpeg"
   },
   luna: {
-    titulo: "Luna", autor: "Juan Soriano", año: "2002", tecnica: "Bronce a la cera perdida", esc: "243", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "https://via.placeholder.com/400x300.png?text=Imagen+Luna", pos: { left: "50%", top: "70%" }
-  },
-  nebulosa: {
-    titulo: "Nebulosa", autor: "Salvador Manzano", año: "1982", tecnica: "Metal esmaltado", esc: "207", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "https://via.placeholder.com/400x300.png?text=Imagen+Nebulosa", pos: { left: "75%", top: "40%" }
+    titulo: "Luna", autor: "Juan Soriano", año: "2002", tecnica: "Bronce a la cera perdida", imagen: "https://via.placeholder.com/400x300.png?text=Imagen+Luna"
   },
   aveDos: {
-    titulo: "Ave dos", autor: "Hersúa", año: "1993", tecnica: "Bronce", esc: "088", coleccion: "Tecnológico de Monterrey, Campus Estado de México", imagen: "https://i.imgur.com/dK5zF5A.jpeg", pos: { left: "70%", top: "20%" }
+    titulo: "Ave dos", autor: "Hersúa", año: "1993", tecnica: "Bronce", imagen: "https://i.imgur.com/gK5yYc5.jpeg" // Usando la imagen de tu screenshot
   }
 };
 
-// --- ELEMENTOS DEL DOM ---
+// --- Seleccionamos los elementos del DOM una sola vez ---
 const detalleContenedor = document.getElementById("detalleObra");
 const detalleOverlay = document.getElementById("detalleOverlay");
-const mapaContainer = document.getElementById("mapaContainer");
 
-// --- FUNCIÓN PARA MOSTRAR EL MODAL CON EL DETALLE DE LA OBRA ---
+// --- Función para MOSTRAR el modal ---
 function mostrarObraArte(clave) {
   const obra = obras[clave];
-  if (!obra) return;
+  if (!obra) {
+    console.error("Obra no encontrada:", clave);
+    return;
+  }
 
+  // Llenamos el modal con la información de la obra
   detalleContenedor.innerHTML = `
     <button class="close-button" onclick="cerrarDetalleObra()">&times;</button>
     <h4>${obra.titulo}</h4>
@@ -884,56 +811,21 @@ function mostrarObraArte(clave) {
     <p><strong>Autor:</strong> ${obra.autor}</p>
     <p><strong>Año:</strong> ${obra.año}</p>
     <p><strong>Técnica:</strong> ${obra.tecnica}</p>
-    <p><strong>ESC/</strong> ${obra.esc}</p>
-    <p><strong>Colección:</strong><br>${obra.coleccion}</p>
   `;
 
+  // Hacemos visibles el modal y su fondo oscuro
   detalleContenedor.style.display = "block";
   detalleOverlay.style.display = "block";
-
-  const marcadorExistente = document.getElementById("marcadorObra");
-  if (marcadorExistente) marcadorExistente.remove();
-
-  const marcador = document.createElement("div");
-  marcador.id = "marcadorObra";
-  marcador.style.cssText = `
-    position: absolute; left: ${obra.pos.left}; top: ${obra.pos.top};
-    width: 20px; height: 20px; border-radius: 50%;
-    background-color: #1a73e8; border: 3px solid white;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5); z-index: 1000;
-    transform: translate(-50%, -50%);
-  `;
-  mapaContainer.appendChild(marcador);
-
-  const menuLateral = document.getElementById('menuLateral');
-  if (menuLateral.classList.contains('visible')) {
-    toggleMenu();
-  }
 }
 
-// --- FUNCIÓN PARA CERRAR EL MODAL ---
+// --- Función para CERRAR el modal ---
 function cerrarDetalleObra() {
   detalleContenedor.style.display = "none";
   detalleOverlay.style.display = "none";
-
-  const marcador = document.getElementById("marcadorObra");
-  if (marcador) marcador.remove();
 }
 
+// --- Event Listener para cerrar el modal haciendo clic en el fondo ---
 detalleOverlay.addEventListener('click', cerrarDetalleObra);
-
-// --- LÓGICA PARA EL MENÚ MÓVIL (HAMBURGUESA) ---
-const menuToggleBtn = document.getElementById('menuToggleBtn');
-const menuLateral = document.getElementById('menuLateral');
-const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-
-function toggleMenu() {
-  menuLateral.classList.toggle('visible');
-  mobileMenuOverlay.classList.toggle('visible');
-}
-
-menuToggleBtn.addEventListener('click', toggleMenu);
-mobileMenuOverlay.addEventListener('click', toggleMenu);
 
 </script>
 
