@@ -857,72 +857,14 @@ const historialBusquedas = [];
     if (marcador) marcador.remove();
   }
 </script>
-// --- INICIO DE CÓDIGO PARA MENÚ MÓVIL ---
 
-// Esperamos a que todo el contenido de la página esté cargado
-document.addEventListener('DOMContentLoaded', () => {
-  
-  const menuToggleBtn = document.getElementById('menuToggleBtn');
-  const menuLateral = document.getElementById('menuLateral');
-  const menuOverlay = document.getElementById('menuOverlay');
-
-  // Función para abrir/cerrar el menú
-  function toggleMenu() {
-    menuLateral.classList.toggle('visible');
-    menuOverlay.classList.toggle('visible');
-  }
-
-  // Evento para el botón de hamburguesa
-  menuToggleBtn.addEventListener('click', toggleMenu);
-
-  // Evento para el overlay (cerrar al tocar fuera)
-  menuOverlay.addEventListener('click', toggleMenu);
-});
-
-// --- FIN DE CÓDIGO PARA MENÚ MÓVIL ---
-
-
-// MODIFICACIÓN A TU FUNCIÓN `mostrarObraArte`
-// Para que el menú se cierre al seleccionar una obra en móvil
-
-function mostrarObraArte(clave) {
-  // ... (todo tu código existente dentro de esta función va aquí)
-  const obra = obras[clave];
-  if (!obra) return;
-
-  const cont = document.getElementById("detalleObra");
-  cont.innerHTML = `
     <div style="text-align: right;">
       <button onclick="cerrarDetalleObra()" style="border:none; background:none; font-size:20px; cursor:pointer; line-height: 1;">&times;</button>
     </div>
-    <h4>${obra.titulo}</h4>
-    <img src="${obra.imagen}" alt="${obra.titulo}" style="width: 100%; border-radius: 10px;" />
-    <p><strong>Autor:</strong> ${obra.autor}</p>
-    <p><strong>Año:</strong> ${obra.año}</p>
-    <p><strong>Técnica:</strong> ${obra.tecnica}</p>
-    <p><strong>ESC/</strong> ${obra.esc}</p>
-    <p><strong>Colección:</strong><br>${obra.coleccion}</p>
-  `;
-  cont.style.display = "block";
+
+
+
   
-  // ... (el resto de tu código para poner el marcador)
-  const marcadorExistente = document.getElementById("marcadorObra");
-  if (marcadorExistente) marcadorExistente.remove();
-  const mapa = document.getElementById("mapaContainer");
-  const marcador = document.createElement("div");
-  marcador.id = "marcadorObra";
-  // ... (etc)
-  mapa.appendChild(marcador);
-
-
-  // --- AÑADIR ESTA LÍNEA ---
-  // Si el menú lateral está visible en móvil, lo cerramos
-  const menuLateral = document.getElementById('menuLateral');
-  if (menuLateral.classList.contains('visible')) {
-      menuLateral.classList.remove('visible');
-      document.getElementById('menuOverlay').classList.remove('visible');
-  }
-}
 </body>
 </html>
 <body>
