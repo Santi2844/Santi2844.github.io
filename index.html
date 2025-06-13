@@ -641,15 +641,14 @@ const historialBusquedas = [];
     padding: 0;
   }
 
-    #mapaContainer {
-  position: relative;
-  width: 100%;
-  background-color: #fff;
-  background-size: cover;
-  overflow: hidden;
-}
-
-  
+  /* Contenedor del mapa o imagen de fondo (simulado) */
+  #mapaContainer {
+    position: relative;
+    width: 100%;
+    height: 10vh; /* Ocupa toda la altura de la pantalla */
+    background-image: #fff;
+    background-size: cover;
+  }
 
   /* --- INICIO DE CAMBIOS --- */
 
@@ -985,14 +984,6 @@ function mostrarObraArte(clave) {
 /* --- ESTILOS RESPONSIVOS PARA MÓVIL --- */
 /* Estos estilos se aplicarán solo en pantallas de 768px de ancho o menos */
 @media (max-width: 768px) {
-  #detalleObra {
-  right: auto;
-  left: 50% !important;
-  top: 120px !important;
-  transform: translateX(-50%);
-  width: 90%;
-}
-
   
   /* Hacemos visible el botón de hamburguesa */
   .menu-toggle-button {
