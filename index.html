@@ -755,8 +755,9 @@ const historialBusquedas = [];
 </div>
 
 
-<div id="detalleObra" style="position: absolute; right: 280px; top: 150px; background: white; padding: 15px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.2); width: 300px; display: none; z-index: 1001;">
-  </div>
+<div id="detalleObra" class="detalle-obra-panel">
+  
+</div>  </div>
 
 <script>
   // El JavaScript no necesita cambios.
@@ -831,7 +832,8 @@ const historialBusquedas = [];
       <p><strong>ESC/</strong> ${obra.esc}</p>
       <p><strong>Colección:</strong><br>${obra.coleccion}</p>
     `;
-    cont.style.display = "block";
+    cont.classList.add('visible'); 
+
     const marcadorExistente = document.getElementById("marcadorObra");
     if (marcadorExistente) marcadorExistente.remove();
     const mapa = document.getElementById("mapaContainer");
@@ -852,7 +854,7 @@ const historialBusquedas = [];
   }
 
   function cerrarDetalleObra() {
-    document.getElementById("detalleObra").style.display = "none";
+document.getElementById("detalleObra").classList.remove('visible');
     const marcador = document.getElementById("marcadorObra");
     if (marcador) marcador.remove();
   }
@@ -952,7 +954,61 @@ const historialBusquedas = [];
     z-index: 1003;
   }
 }
+
+
+
+/* --- ESTILOS PARA EL PANEL DE DETALLES DE OBRA --- */
+.detalle-obra-panel {
+  /* Estilos visuales que antes estaban en línea */
+  background: white;
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  width: 300px;
+  z-index: 1003; /* Lo ponemos por encima del overlay y del menú */
+  
+  /* Lo ocultamos por defecto */
+  display: none;
+
+  /* --- Posicionamiento para ESCRITORIO --- */
+  position: absolute;
+  right: 280px; 
+  top: 150px;
+}
+
+/* Clase para hacerlo visible con JavaScript */
+.detalle-obra-panel.visible {
+  display: block;
+}
+
+
+/* DENTRO DE TU MEDIA QUERY EXISTENTE, AÑADE ESTO */
+@media (max-width: 768px) {
+  
+  /* ... (aquí ya tienes los estilos para #menuLateral y .menu-toggle-button) ... */
+
+
+  /* --- AÑADIR ESTILOS PARA EL PANEL DE DETALLES EN MÓVIL --- */
+  .detalle-obra-panel {
+    /* Lo convertimos en un modal centrado */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%; /* Hacemos que ocupe el 90% del ancho del móvil */
+    max-width: 400px; /* Pero con un límite de ancho */
+    
+    /* Reseteamos la posición de escritorio */
+    right: auto;
+    top: 40%; /* Un poco más arriba del centro se ve mejor */
+  }
+
+} /* Fin del media query */
+
+
+
 </style>
+
 <script>
   // --- INICIO DE CÓDIGO PARA MENÚ MÓVIL ---
 
@@ -1000,7 +1056,8 @@ function mostrarObraArte(clave) {
     <p><strong>ESC/</strong> ${obra.esc}</p>
     <p><strong>Colección:</strong><br>${obra.coleccion}</p>
   `;
-  cont.style.display = "block";
+  cont.classList.add('visible'); 
+
   
   // ... (el resto de tu código para poner el marcador)
   const marcadorExistente = document.getElementById("marcadorObra");
@@ -1021,3 +1078,17 @@ function mostrarObraArte(clave) {
   }
 }
 </script>
+
+
+
+<body>
+  <button id="menuToggleBtn" class="menu-toggle-button">☰</button>
+  <div id="menuOverlay" class="menu-overlay"></div>
+
+  <div id="mapaContainer">
+    </div>
+  
+  </body>
+  <script>
+    
+  </script>
