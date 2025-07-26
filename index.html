@@ -2,7 +2,8 @@
 <html lang="es">
 
 <head>
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <meta charset="UTF-8">
   <title>Buscador de Salones - TEC</title>
   <style>
@@ -149,15 +150,16 @@
   
   <h1>Buscador de Salones - TEC</h1>
 
-<div style="position: relative; display: inline-block;">
+<div style="display: flex; justify-content: center; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
   <input type="text" id="codigoSalon" placeholder="Ej. 5304 o Edificio II">
-  <div id="sugerencias"></div>
+  <button onclick="buscarSalon()">Buscar</button>
 </div>
+
+
 <button onclick="buscarSalon()">Buscar</button>
 
 
-
-  <p id="descripcion"><strong>bienvenidos!
+<p id="descripcion"><strong>¡Bienvenidos!</strong></p>
 
   <div id="menu">
     <h2>Universidad</h2>
