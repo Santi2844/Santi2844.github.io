@@ -2,14 +2,10 @@
 <html lang="es">
 
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
   <meta charset="UTF-8">
   <title>Buscador de Salones - TEC</title>
   <style>
-    .search-container {
-  position: relative; /* Necesario para que #sugerencias se posicione correctamente */
-  padding: 15px 0; /* Añade un poco de espacio vertical */
-}
     body {
       font-family: Arial, sans-serif;
       background-color: #f0f0f0;
@@ -153,21 +149,11 @@
   
   <h1>Buscador de Salones - TEC</h1>
 
-<div class="search-container">
+<div style="position: relative; display: inline-block;">
   <input type="text" id="codigoSalon" placeholder="Ej. 5304 o Edificio II">
-  <button onclick="buscarSalon()">Buscar</button>
   <div id="sugerencias"></div>
 </div>
-
-<p id="descripcion"><strong>bienvenidos!</strong></p>
-
-
-
-
-
-
-
-
+<button onclick="buscarSalon()">Buscar</button>
 
 
 
